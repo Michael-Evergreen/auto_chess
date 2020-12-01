@@ -1,0 +1,750 @@
+# (cat) AA:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Abaddon:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Alchemist:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) AM:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Arc:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Axe:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Bane:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Barathum:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Batrider:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) BB:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) BeastMaster:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) BH:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Blood:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Brood:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Centaur:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Chaos:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Chen:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Clinkz:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Clock:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) CM:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) DarkWillow:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Dazzle:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Disruptor:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Doom:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) DP:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) DragonKnight:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Drow:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) DS:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) EarthShaker:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) EarthSpirit:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Elder:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) EmberSpirit:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Enchantress:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Enigma:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Grandma:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Grim:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Gyro:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Huskar:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) IceDuck:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Invoker:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) IO:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Jakiro:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Juggernaut:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) KOTL:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Kunkka:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) LC:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) LD:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Leshrac:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Lich:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Lina:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Lion:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Luna:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Lycan:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Magnus:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Mars:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Medusa:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Meepo:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Mirana:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) MonkeyKing:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Morph:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Naga:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Naix:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Necrophos:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Nevermore:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) NP:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) NS:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Nyx:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) OD:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) OgreMagi:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) OmniKnight:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Oracle:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Panda:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Pangolier:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Phoenix:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) PhuongAnh:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) PhuongLinh:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Puck:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Pudge:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Pugna:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) QOP:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Razor:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Riki:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Rubik:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) SandKing:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) SD:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) ShadowShaman:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Silencer:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) SkeletonKing:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) SkywrathMage:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Sladar:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Slark:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Sniper:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Spectre:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Storm:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Sven:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) TB:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Terrorist:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Tide:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Timber:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Tinker:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Tiny:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) TramAnh:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Treant:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Troll:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Tuskar:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Underlord:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Undying:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Ursa:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Venom:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Viper:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Visage:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Void:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) VoidSpirit:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) VS:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Warlock:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Weaver:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) WindRanger:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) WitchDoctor:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) WraithKing:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Zeus:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Assassin:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Aqir:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) DemonHunter:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Druid:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Hunter:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Knight:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Mage:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Inventor:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Priest:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Shaman:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Warlock:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Warrior:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Wizard:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Dragon:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Dwarf:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Demon:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Ogre:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Elf:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Undead:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Orc:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Goblin:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Elemental:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Razor:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Enigma:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Human:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Naga:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Troll:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Beast:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) God:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
+# (cat) Kobold:
+- Hero's strengths
+- Hero's weaknesses
+- Hero counters
+- Hero's countered by> TODO
