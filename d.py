@@ -1237,238 +1237,268 @@ from string import ascii_lowercase
 # QShortcut(Qt.Key_N, self, activated=lambda: self.keyPressEvent("n"))
 # QShortcut(Qt.Key_M, self, activated=lambda: self.keyPressEvent("m"))
 
-namelist = (
-    'AA',
-    'Abaddon',
-    'Alchemist',
-    'AM',
-    'Arc',
-    'Axe',
-    'Bane',
-    'Barathum',
-    'Batrider',
-    'BB',
-    'BeastMaster',
-    'BH',
-    'Blood',
-    'Brood',
-    'Centaur',
-    'Chaos',
-    'Chen',
-    'Clinkz',
-    'Clock',
-    'CM',
-    'DarkWillow',
-    'Dazzle',
-    'Disruptor',
-    'Doom',
-    'DP',
-    'DragonKnight',
-    'Drow',
-    'DS',
-    'EarthShaker',
-    'EarthSpirit',
-    'Elder',
-    'EmberSpirit',
-    'Enchantress',
-    'Enigma',
-    'Grandma',
-    'Grim',
-    'Gyro',
-    'Huskar',
-    'IceDuck',
-    'Invoker',
-    'IO',
-    'Jakiro',
-    'Juggernaut',
-    'KOTL',
-    'Kunkka',
-    'LC',
-    'LD',
-    'Leshrac',
-    'Lich',
-    'Lina',
-    'Lion',
-    'Luna',
-    'Lycan',
-    'Magnus',
-    'Mars',
-    'Medusa',
-    'Meepo',
-    'Mirana',
-    'MonkeyKing',
-    'Morph',
-    'Naga',
-    'Naix',
-    'Necrophos',
-    'Nevermore',
-    'NP',
-    'NS',
-    'Nyx',
-    'OD',
-    'OgreMagi',
-    'OmniKnight',
-    'Oracle',
-    'Panda',
-    'Pangolier',
-    'Phoenix',
-    'PhuongAnh',
-    'PhuongLinh',
-    'Puck',
-    'Pudge',
-    'Pugna',
-    'QOP',
-    'Razor',
-    'Riki',
-    'Rubik',
-    'SandKing',
-    'SD',
-    'ShadowShaman',
-    'Silencer',
-    'SkeletonKing',
-    'SkywrathMage',
-    'Sladar',
-    'Slark',
-    'Sniper',
-    'Spectre',
-    'Storm',
-    'Sven',
-    'TB',
-    'Terrorist',
-    'Tide',
-    'Timber',
-    'Tinker',
-    'Tiny',
-    'TramAnh',
-    'Treant',
-    'Troll',
-    'Tuskar',
-    'Underlord',
-    'Undying',
-    'Ursa',
-    'Venom',
-    'Viper',
-    'Visage',
-    'Void',
-    'VoidSpirit',
-    'VS',
-    'Warlock',
-    'Weaver',
-    'WindRanger',
-    'WitchDoctor',
-    'WraithKing',
-    'Zeus'
-)
-
-import nltk
-
-a = """
-Assassin
-
-Aqir
-
-
-DemonHunter
-
-
-Druid
-
-Hunter
-
-
-Knight
-
-
-
-
-Mage
-
-
-Inventor
-
-
-Priest
-
-Shaman
-
-
-Warlock
-
-
-Warrior
-
-
-
-Wizard
-
-
-Dragon	
-
-
-Dwarf	
-
-
-Demon	
-
-
-Ogre	
-
-
-Elf	
-
-
-Undead	
-
-Orc	
-
-
-Goblin	
-
-Elemental	
-
-Razor
-
-Enigma
-
-Human	
-
-Naga	
-
-Troll	
-
-
-Beast	
-
-
-God
-
-Kobold
-
-"""
+# namelist = (
+#     'AA',
+#     'Abaddon',
+#     'Alchemist',
+#     'AM',
+#     'Arc',
+#     'Axe',
+#     'Bane',
+#     'Barathum',
+#     'Batrider',
+#     'BB',
+#     'BeastMaster',
+#     'BH',
+#     'Blood',
+#     'Brood',
+#     'Centaur',
+#     'Chaos',
+#     'Chen',
+#     'Clinkz',
+#     'Clock',
+#     'CM',
+#     'DarkWillow',
+#     'Dazzle',
+#     'Disruptor',
+#     'Doom',
+#     'DP',
+#     'DragonKnight',
+#     'Drow',
+#     'DS',
+#     'EarthShaker',
+#     'EarthSpirit',
+#     'Elder',
+#     'EmberSpirit',
+#     'Enchantress',
+#     'Enigma',
+#     'Grandma',
+#     'Grim',
+#     'Gyro',
+#     'Huskar',
+#     'IceDuck',
+#     'Invoker',
+#     'IO',
+#     'Jakiro',
+#     'Juggernaut',
+#     'KOTL',
+#     'Kunkka',
+#     'LC',
+#     'LD',
+#     'Leshrac',
+#     'Lich',
+#     'Lina',
+#     'Lion',
+#     'Luna',
+#     'Lycan',
+#     'Magnus',
+#     'Mars',
+#     'Medusa',
+#     'Meepo',
+#     'Mirana',
+#     'MonkeyKing',
+#     'Morph',
+#     'Naga',
+#     'Naix',
+#     'Necrophos',
+#     'Nevermore',
+#     'NP',
+#     'NS',
+#     'Nyx',
+#     'OD',
+#     'OgreMagi',
+#     'OmniKnight',
+#     'Oracle',
+#     'Panda',
+#     'Pangolier',
+#     'Phoenix',
+#     'PhuongAnh',
+#     'PhuongLinh',
+#     'Puck',
+#     'Pudge',
+#     'Pugna',
+#     'QOP',
+#     'Razor',
+#     'Riki',
+#     'Rubik',
+#     'SandKing',
+#     'SD',
+#     'ShadowShaman',
+#     'Silencer',
+#     'SkeletonKing',
+#     'SkywrathMage',
+#     'Sladar',
+#     'Slark',
+#     'Sniper',
+#     'Spectre',
+#     'Storm',
+#     'Sven',
+#     'TB',
+#     'Terrorist',
+#     'Tide',
+#     'Timber',
+#     'Tinker',
+#     'Tiny',
+#     'TramAnh',
+#     'Treant',
+#     'Troll',
+#     'Tuskar',
+#     'Underlord',
+#     'Undying',
+#     'Ursa',
+#     'Venom',
+#     'Viper',
+#     'Visage',
+#     'Void',
+#     'VoidSpirit',
+#     'VS',
+#     'Warlock',
+#     'Weaver',
+#     'WindRanger',
+#     'WitchDoctor',
+#     'WraithKing',
+#     'Zeus'
+# )
+#
+# import nltk
+#
+# a = """
+# Assassin
+#
+# Aqir
+#
+#
+# DemonHunter
+#
+#
+# Druid
+#
+# Hunter
+#
+#
+# Knight
+#
+#
+#
+#
+# Mage
+#
+#
+# Inventor
+#
+#
+# Priest
+#
+# Shaman
+#
+#
+# Warlock
+#
+#
+# Warrior
+#
+#
+#
+# Wizard
+#
+#
+# Dragon
+#
+#
+# Dwarf
+#
+#
+# Demon
+#
+#
+# Ogre
+#
+#
+# Elf
+#
+#
+# Undead
+#
+# Orc
+#
+#
+# Goblin
+#
+# Elemental
+#
+# Razor
+#
+# Enigma
+#
+# Human
+#
+# Naga
+#
+# Troll
+#
+#
+# Beast
+#
+#
+# God
+#
+# Kobold
+#
+# """
 
 # b = ['Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold', 'AA', 'Abaddon', 'Alchemist', 'AM', 'Arc', 'Axe', 'Bane', 'Barathum', 'Batrider', 'BB', 'BeastMaster', 'BH', 'Blood', 'Brood', 'Centaur', 'Chaos', 'Chen', 'Clinkz', 'Clock', 'CM', 'DarkWillow', 'Dazzle', 'Disruptor', 'Doom', 'DP', 'DragonKnight', 'Drow', 'DS', 'EarthShaker', 'EarthSpirit', 'Elder', 'EmberSpirit', 'Enchantress', 'Enigma', 'Grandma', 'Grim', 'Gyro', 'Huskar', 'IceDuck', 'Invoker', 'IO', 'Jakiro', 'Juggernaut', 'KOTL', 'Kunkka', 'LC', 'LD', 'Leshrac', 'Lich', 'Lina', 'Lion', 'Luna', 'Lycan', 'Magnus', 'Mars', 'Medusa', 'Meepo', 'Mirana', 'MonkeyKing', 'Morph', 'Naga', 'Naix', 'Necrophos', 'Nevermore', 'NP', 'NS', 'Nyx', 'OD', 'OgreMagi', 'OmniKnight', 'Oracle', 'Panda', 'Pangolier', 'Phoenix', 'PhuongAnh', 'PhuongLinh', 'Puck', 'Pudge', 'Pugna', 'QOP', 'Razor', 'Riki', 'Rubik', 'SandKing', 'SD', 'ShadowShaman', 'Silencer', 'SkeletonKing', 'SkywrathMage', 'Sladar', 'Slark', 'Sniper', 'Spectre', 'Storm', 'Sven', 'TB', 'Terrorist', 'Tide', 'Timber', 'Tinker', 'Tiny', 'TramAnh', 'Treant', 'Troll', 'Tuskar', 'Underlord', 'Undying', 'Ursa', 'Venom', 'Viper', 'Visage', 'Void', 'VoidSpirit', 'VS', 'Warlock', 'Weaver', 'WindRanger', 'WitchDoctor', 'WraithKing', 'Zeus']
 
-classandspecies = ('Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold')
+# classandspecies = ('Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold')
+#
+# b = namelist+classandspecies
+# print(b)
+#
+# f = open("C:/autochess_data/Strategies.txt","w")
+#
+# for item in b:
+#
+#     f.write("# (cat) " + item + ":")
+#     f.write("\n")
+#     f.write("- Hero's strengths")
+#     f.write("\n")
+#     f.write("- Hero's weaknesses")
+#     f.write("\n")
+#     f.write("- Hero counters")
+#     f.write("\n")
+#     f.write("- Hero's countered by")
+#     f.write("> TODO\n")
 
-b = namelist+classandspecies
-print(b)
+# c = ['Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock',
+# 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold']
+import requests
+import base64
 
-f = open("C:/autochess_data/Strategies.txt","w")
+# def push_to_github(filename, repo, branch, token):
+#     url="https://api.github.com/repos/"+repo+"/contents/"+filename
+#
+#     base64content=base64.b64encode(open(filename,"rb").read())
+#
+#     data = requests.get(url+'?ref='+branch, headers = {"Authorization": "token "+token}).json()
+#     sha = data['sha']
+#
+#     if base64content.decode('utf-8')+"\n" != data['content']:
+#         message = json.dumps({"message":"update",
+#                             "branch": branch,
+#                             "content": base64content.decode("utf-8") ,
+#                             "sha": sha
+#                             })
+#
+#         resp=requests.put(url, data = message, headers = {"Content-Type": "application/json", "Authorization": "token "+token})
+#
+#         print(resp)
+#     else:
+#         print("nothing to update")
 
-for item in b:
+token = "d77e1404d42233a084c3c377a73ceb3dbf00ced7"
+filename="Strategies.txt"
+repo = "Michael-Evergreen/auto_chess"
+branch="main"
 
-    f.write("# (cat) " + item + ":")
-    f.write("\n")
-    f.write("- Hero's strengths")
-    f.write("\n")
-    f.write("- Hero's weaknesses")
-    f.write("\n")
-    f.write("- Hero counters")
-    f.write("\n")
-    f.write("- Hero's countered by")
-    f.write("> TODO\n")
-
-
-
-
-# c = ['Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold']
+# push_to_github(filename, repo, branch, token)
+url = "https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt?ref=main"
+resp = requests.put(url, data=message, headers={"Content-Type": "application/json", "Authorization": "token " + token})

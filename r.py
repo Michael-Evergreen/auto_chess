@@ -673,7 +673,7 @@ class Strategies(QWidget):
         self.setLayout(self.layout)
 
     def find(self):
-        text = self.SearchWidget.text()
+        text = "(cat) " + self.SearchWidget.text()
         self.TextBody.setFocus()
         self.TextBody.moveCursor(QTextCursor.End)
         self.TextBody.find(text, QtGui.QTextDocument.FindBackward)
@@ -774,7 +774,9 @@ class Myapp(QWidget):
         return
 
     def onTableClicked(self, index):
-        data = index.data()
+        if index.data().startswith(("1", "2", "3", "4", "5")):
+            return
+        data = "(cat) " + index.data()
         print(data)
         self.Strategies.show()
         self.Strategies.TextBody.setFocus()
