@@ -2,26 +2,12 @@
 
 # (cat) BB:
 
-- Hero's strengths
-- Hero's weaknesses
+- asdasda
+- Haasero's weaknesseas
 - Hero counters
-- Hero's countered by> TODO
+- xa ax's countered by> TODO
 
-# (cat) BeastMaster:
-
-- Hero's strengths
-- Hero's weaknesses
-- Hero counters
-- Hero's countered by> TODO
-
-# (cat) BH:
-
-- Hero's strengths
-- Hero's weaknesses
-- Hero counters
-- Hero's countered by> TODO
-
-# (cat) Blood:
+# (cat) Blo aod:
 
 - Hero's strengths
 - Hero's weaknesses
