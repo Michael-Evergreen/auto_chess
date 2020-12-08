@@ -13,6 +13,16 @@ import threading
 import copy
 import sys
 from PyQt5.QtWidgets import QApplication
+import requests
+import base64
+
+"""
+Load Strategies_and_Tips data from github  
+"""
+rGet = requests.get("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt")
+data = (base64.b64decode(rGet.json()['content']).decode("utf-8"))
+with open("C:/autochess_data/Strategies.txt", "w") as f:
+    f.write(data)
 
 """
 LOADS DATA AND CONSTANT VARIABLES TO RAM
@@ -24,34 +34,34 @@ except OSError as error:
     pass
 
 namelist = (
-    'AA',
+    # 'AA',
     'Abaddon',
     'Alchemist',
     'AM',
-    'Arc',
+    # 'Arc',
     'Axe',
-    'Bane',
+    # 'Bane',
     'Barathum',
     'Batrider',
-    'BB',
+    # 'BB',
     'BeastMaster',
     'BH',
-    'Blood',
+    # 'Blood',
     'Brood',
-    'Centaur',
+    # 'Centaur',
     'Chaos',
     'Chen',
-    'Clinkz',
+    # 'Clinkz',
     'Clock',
     'CM',
     'DarkWillow',
     'Dazzle',
     'Disruptor',
     'Doom',
-    'DP',
+    # 'DP',
     'DragonKnight',
     'Drow',
-    'DS',
+    # 'DS',
     'EarthShaker',
     'EarthSpirit',
     'Elder',
@@ -70,53 +80,53 @@ namelist = (
     'KOTL',
     'Kunkka',
     'LC',
-    'LD',
+    'LoneDruid',
     'Leshrac',
     'Lich',
     'Lina',
     'Lion',
     'Luna',
     'Lycan',
-    'Magnus',
+    # 'Magnus',
     'Mars',
     'Medusa',
     'Meepo',
     'Mirana',
     'MonkeyKing',
-    'Morph',
-    'Naga',
+    'Morphling',
+    # 'Naga',
     'Naix',
     'Necrophos',
     'Nevermore',
     'NP',
-    'NS',
+    # 'NS',
     'Nyx',
     'OD',
     'OgreMagi',
     'OmniKnight',
     'Oracle',
     'Panda',
-    'Pangolier',
-    'Phoenix',
+    # 'Pangolier',
+    # 'Phoenix',
     'PhuongAnh',
-    'PhuongLinh',
-    'Puck',
+    # 'PhuongLinh',
+    # 'Puck',
     'Pudge',
-    'Pugna',
+    # 'Pugna',
     'QOP',
     'Razor',
-    'Riki',
+    # 'Riki',
     'Rubik',
     'SandKing',
     'SD',
     'ShadowShaman',
-    'Silencer',
-    'SkeletonKing',
-    'SkywrathMage',
+    # 'Silencer',
+    # 'SkeletonKing',
+    # 'SkywrathMage',
     'Sladar',
     'Slark',
     'Sniper',
-    'Spectre',
+    # 'Spectre',
     'Storm',
     'Sven',
     'TB',
@@ -129,84 +139,132 @@ namelist = (
     'Treant',
     'Troll',
     'Tuskar',
-    'Underlord',
-    'Undying',
-    'Ursa',
+    # 'Underlord',
+    # 'Undying',
+    # 'Ursa',
     'Venom',
     'Viper',
     'Visage',
     'Void',
-    'VoidSpirit',
-    'VS',
-    'Warlock',
-    'Weaver',
+    # 'VoidSpirit',
+    # 'VS',
+    # 'Warlock',
+    # 'Weaver',
     'WindRanger',
     'WitchDoctor',
-    'WraithKing',
+    # 'WraithKing',
     'Zeus'
 )
 
-classandspecies = ('Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold')
+# classandspecies = ('Assassin', 'Aqir', 'DemonHunter', 'Druid', 'Hunter', 'Knight', 'Mage', 'Inventor', 'Priest', 'Shaman', 'Warlock', 'Warrior', 'Wizard', 'Dragon', 'Dwarf', 'Demon', 'Ogre', 'Elf', 'Undead', 'Orc', 'Goblin', 'Elemental', 'Razor', 'Enigma', 'Human', 'Naga', 'Troll', 'Beast', 'God', 'Kobold')
+
+CAS_numbers = [int(file[:-4]) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+CAS_number_icons = [cv2.imread("C:/autochess_data/class_species_numbers/"+ file, 0) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+CAS_numbers_and_icons = tuple(zip(CAS_numbers, CAS_number_icons))
+
+CAS_names = [file[:-4] for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+CAS_icons = [cv2.imread("C:/autochess_data/class_species_icons/"+ file) for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+CAS_names_and_icons = tuple(zip(CAS_names, CAS_icons))
+
+CAS_dict = {'Aqir': [0, 0], 'Assassin': [0, 0], 'Beast': [0, 0], 'Chieftan': [0, 0], 'Demon': [0, 0], 'Dragon': [0, 0], 'Druid': [0, 0], 'Dwarf': [0, 0], 'Elemental': [0, 0], 'Elf': [0, 0], 'Faceless': [0, 0], 'Goblin': [0, 0], 'God': [0, 0], 'Human': [0, 0], 'Hunter': [0, 0], 'Inventor': [0, 0], 'Knight': [0, 0], 'Kobold': [0, 0], 'Mage': [0, 0], 'Monk': [0, 0], 'Naga': [0, 0], 'Ogre': [0, 0], 'Orc': [0, 0], 'Pandaren': [0, 0], 'Priest': [0, 0], 'Shaman': [0, 0], 'Troll': [0, 0], 'Undead': [0, 0], 'Warlock': [0, 0], 'Warrior': [0, 0], 'Wizard': [0, 0]}
+
+on_stage_CAS_x_coors = (1136,1327)
+on_stage_CAS_y_coors = ((202, 289), (202, 373), (202, 460), (202, 547), (202, 635), (202, 723), (202, 810), (202, 897))
+
+
 
 # creates Dictionary for Rank, Species, Class, and number of heroes left in Pool for creating table
 RSCP_Dict = {}
-RSCP_Dict = {'Barathum': ['1G', 'Chieftan', 'Assassin', 'Barathum', 45], 'Axe': ['1G', 'Orc', 'Warrior', 'Axe', 45],
+RSCP_Dict = {
+
+             'Barathum': ['1G', 'Chieftan', 'Assassin', 'Barathum', 45],
+             'Axe': ['1G', 'Orc', 'Warrior', 'Axe', 45],
              'Enchantress': ['1G', 'Beast', 'Druid', 'Enchantress', 45],
-             'Tuskar': ['1G', 'Beast', 'Warrior', 'Tuskar', 45], 'Drow': ['1G',
-                                                                          'Undead', 'Hunter', 'Drow', 45],
-             'BH': ['1G', 'Goblin', 'Assassin', 'BH', 45], 'Clock': ['1G', 'Goblin', 'Inventor', 'Clock', 45],
+             'Tuskar': ['1G', 'Beast', 'Warrior', 'Tuskar', 45],
+             'Drow': ['1G', 'Undead', 'Hunter', 'Drow', 45],
+             'BH': ['1G', 'Goblin', 'Assassin', 'BH', 45],
+             'Clock': ['1G', 'Goblin', 'Inventor', 'Clock', 45],
              'ShadowShaman': ['1G', 'Troll', 'Shaman', 'ShadowShaman', 45],
-             'Tinker': ['1G', 'Goblin', 'Inventor', 'Tinker', 45], 'AM': ['1G', 'Elf', 'DemonHunter', 'AM', 45],
-             'Tiny': ['1G', 'Elemental', 'Warrior', 'Tiny', 45], 'Mars': ['1G', 'God', 'Warrior', 'Mars', 45],
-             'IceDuck': ['1G', 'Dragon', 'Mage', 'IceDuck', 45], 'CM': ['1G', 'Human', 'Mage', 'CM', 45],
-             'Luna': ['1G', 'Elf', 'Knight', 'Luna', 45], 'WitchDoctor': ['1G', 'Troll', 'Warlock', 'WitchDoctor', 45],
-             'Lion': ['2G', 'Demon', 'Wizard', 'Lion', 30], 'Batrider': ['2G', 'Troll', 'Knight', 'Batrider', 30],
+             'Tinker': ['1G', 'Goblin', 'Inventor', 'Tinker', 45],
+             'AM': ['1G', 'Elf', 'DemonHunter', 'AM', 45],
+             'Tiny': ['1G', 'Elemental', 'Warrior', 'Tiny', 45],
+             'Mars': ['1G', 'God', 'Warrior', 'Mars', 45],
+             'IceDuck': ['1G', 'Dragon', 'Mage', 'IceDuck', 45],
+             'CM': ['1G', 'Human', 'Mage', 'CM', 45],
+             'Luna': ['1G', 'Elf', 'Knight', 'Luna', 45],
+             'WitchDoctor': ['1G', 'Troll', 'Warlock', 'WitchDoctor', 45],
+             'Lion': ['2G', 'Demon', 'Wizard', 'Lion', 30],
+             'Batrider': ['2G', 'Troll', 'Knight', 'Batrider', 30],
              'OgreMagi': ['2G', 'Ogre', 'Mage', 'OgreMagi', 30],
              'BeastMaster': ['2G', 'Orc', 'Hunter', 'BeastMaster', 30],
              'Juggernaut': ['2G', 'Orc', 'Warrior', 'Juggernaut', 30],
-             'Timber': ['2G', 'Goblin', 'Inventor', 'Timber', 30], 'Chaos': ['2G', 'Demon', 'Knight', 'Chaos', 30],
-             'Morph': ['2G', 'Elemental', 'Assassin', 'Morph', 30], 'NP': ['2G', 'Elf', 'Druid', 'NP', 30],
-             'Mirana': ['2G', 'Elf', 'Hunter', 'Mirana', 30], 'Slark': ['2G', 'Naga', 'Assassin', 'Slark',
-                                                                        30],
-             'Dazzle': ['2G', 'Troll', 'Priest', 'Dazzle', 30], 'Sniper': ['2G', 'Dwarf', 'Hunter', 'Sniper', 30],
-             'Abaddon': ['2G', 'Undead', 'Knight', 'Abaddon', 30], 'Oracle': ['2G', 'God', 'Priest', 'Oracle', 30],
-             'Panda': ['2G', 'Pandaren', 'Monk', 'Panda', 30], 'Venom': ['3G', 'Aqir/Beast', 'Warlock', 'Venom', 25],
+             'Timber': ['2G', 'Goblin', 'Inventor', 'Timber', 30],
+             'Chaos': ['2G', 'Demon', 'Knight', 'Chaos', 30],
+             'Morphling': ['2G', 'Elemental', 'Assassin', 'Morphling', 30],
+             'EmberSpirit': ['2G', 'Pandaren', 'Assassin', 'EmberSpirit', 30],
+             'NP': ['2G', 'Elf', 'Druid', 'NP', 30],
+             'Mirana': ['2G', 'Elf', 'Hunter', 'Mirana', 30],
+             'Slark': ['2G', 'Naga', 'Assassin', 'Slark', 30],
+             'Dazzle': ['2G', 'Troll', 'Priest', 'Dazzle', 30],
+             'Sniper': ['2G', 'Dwarf', 'Hunter', 'Sniper', 30],
+             'Abaddon': ['2G', 'Undead', 'Knight', 'Abaddon', 30],
+             'Oracle': ['2G', 'God', 'Priest', 'Oracle', 30],
+             'Panda': ['2G', 'Pandaren', 'Monk', 'Panda', 30],
+             'Venom': ['3G', 'Aqir/Beast', 'Warlock', 'Venom', 25],
              'OmniKnight': ['3G', 'Human', 'Knight', 'OmniKnight', 25],
-             'Razor': ['3G', 'Elemental', 'Mage', 'Razor', 25], 'PhuongAnh': ['3G', 'Elf', 'Assassin', 'PhuongAnh', 25],
-             'Treant': ['3G', 'Elf', 'Druid', 'Treant', 25], 'Sladar': ['3G', 'Naga', 'Warrior', 'Sladar', 25],
+             'Razor': ['3G', 'Elemental', 'Mage', 'Razor', 25],
+             'PhuongAnh': ['3G', 'Elf', 'Assassin', 'PhuongAnh', 25],
+             'Treant': ['3G', 'Elf', 'Druid', 'Treant', 25],
+             'Sladar': ['3G', 'Naga', 'Warrior', 'Sladar', 25],
              'SandKing': ['3G', 'Aqir', 'Assassin', 'SandKing', 25],
-             'Lycan': ['3G', 'Human/Beast', 'Warrior', 'Lycan', 25], 'TB': ['3G', 'Demon', 'DemonHunter', 'TB', 25],
+             'Lycan': ['3G', 'Human/Beast', 'Warrior', 'Lycan', 25],
+             'TB': ['3G', 'Demon', 'DemonHunter', 'TB', 25],
              'Viper': ['3G', 'Dragon', 'Assassin', 'Viper', 25],
-             'Nevermore': ['3G', 'Demon', 'Warlock', 'Nevermore', 25], 'LC': ['3G', 'Human', 'Knight', 'LC', 25],
-             'Lina': ['3G', 'Human', 'Mage', 'Lina', 25], 'Visage': ['3G', 'Dragon/Undead', 'Hunter', 'Visage', 25],
-             'Rubik': ['3G', 'God', 'Wizard', 'Rubik', 25], 'Meepo': ['3G', 'Kobold', 'Inventor', 'Meepo', 25],
+             'Nevermore': ['3G', 'Demon', 'Warlock', 'Nevermore', 25],
+             'LC': ['3G', 'Human', 'Knight', 'LC', 25],
+             'Lina': ['3G', 'Human', 'Mage', 'Lina', 25],
+             'Visage': ['3G', 'Dragon/Undead', 'Hunter', 'Visage', 25],
+             'Rubik': ['3G', 'God', 'Wizard', 'Rubik', 25],
+             'Meepo': ['3G', 'Kobold', 'Inventor', 'Meepo', 25],
+             'Void': ['3G', 'Faceless', 'Assassin', 'Void', 25],
              'WindRanger': ['4G', 'Elf', 'Hunter', 'WindRanger', 15],
-             'Doom': ['4G', 'Demon', 'Warrior', 'Doom', 15], 'Kunkka': ['4G', 'Human', 'Warrior', 'Kunkka', 15],
-             'Grim': ['4G', 'Demon', 'Wizard', 'Grim', 15], 'KOTL': ['4G', 'Human', 'Mage', 'KOTL', 15],
+             'Doom': ['4G', 'Demon', 'Warrior', 'Doom', 15],
+             'Kunkka': ['4G', 'Human', 'Warrior', 'Kunkka', 15],
+             'Grim': ['4G', 'Demon', 'Wizard', 'Grim', 15],
+             'KOTL': ['4G', 'Human', 'Mage', 'KOTL', 15],
              'Necrophos': ['4G', 'Undead', 'Warlock', 'Necrophos', 15],
              'Alchemist': ['4G', 'Goblin', 'Warlock', 'Alchemist', 15],
              'DragonKnight': ['4G', 'Human/Dragon', 'Knight', 'DragonKnight', 15],
-             'Medusa': ['4G', 'Naga', 'Hunter', 'Medusa', 15], 'LD': ['4G', 'Beast', 'Druid', 'LD', 15],
-             'Chen': ['4G', 'Orc', 'Priest', 'Chen', 15], 'Nyx': ['4G', 'Aqir', 'Assassin', 'Nyx', 15],
+             'Medusa': ['4G', 'Naga', 'Hunter', 'Medusa', 15],
+             'LoneDruid': ['4G', 'Beast', 'Druid', 'LoneDruid', 15],
+             'Chen': ['4G', 'Orc', 'Priest', 'Chen', 15],
+             'Nyx': ['4G', 'Aqir', 'Assassin', 'Nyx', 15],
              'Brood': ['4G', 'Aqir', 'Hunter', 'Brood', 15],
              'EarthShaker': ['4G', 'Chieftan', 'Shaman', 'EarthShaker', 15],
-             'Disruptor': ['5G', 'Orc', 'Shaman', 'Disruptor', 10], 'Gyro': ['5G', 'Dwarf', 'Inventor', 'Gyro', 10],
-             'Tide': ['5G', 'Naga', 'Hunter', 'Tide', 10], 'Enigma': ['5G', 'Elemental', 'Warlock', 'Enigma', 10],
+             'Disruptor': ['5G', 'Orc', 'Shaman', 'Disruptor', 10],
+             'Gyro': ['5G', 'Dwarf', 'Inventor', 'Gyro', 10],
+             'Tide': ['5G', 'Naga', 'Hunter', 'Tide', 10],
+             'Enigma': ['5G', 'Elemental', 'Warlock', 'Enigma', 10],
              'Terrorist': ['5G', 'Goblin', 'Inventor', 'Terrorist', 10],
-             'Elder': ['5G', 'God/Chieftan', 'Druid', 'Elder', 10], 'Sven': ['5G', 'Demon', 'Warrior', 'Sven', 10],
-             'Zeus': ['5G', 'God', 'Mage', 'Zeus', 10], 'QOP': ['5G', 'Demon', 'Assassin', 'QOP', 10],
+             'Elder': ['5G', 'God/Chieftan', 'Druid', 'Elder', 10],
+             'Sven': ['5G', 'Demon', 'Warrior', 'Sven', 10],
+             'Zeus': ['5G', 'God', 'Mage', 'Zeus', 10],
+             'QOP': ['5G', 'Demon', 'Assassin', 'QOP', 10],
              'TramAnh': ['5G', 'Elf', 'Assassin', 'TramAnh', 10],
-             'MonkeyKing': ['5G', 'Beast', 'Monk', 'MonkeyKing', 10], 'Invoker': ['5G', 'Elf', 'Mage', 'Invoker', 10],
-             'Huskar': ['5G', 'Troll', 'Warrior', 'Huskar', 10], 'Jakiro': ['5G', 'Dragon', 'Mage', 'Jakiro', 10],
-             'Snapfire': ['5G', 'Goblin', 'Knight', 'Snapfire', 10]}
+             'MonkeyKing': ['5G', 'Beast', 'Monk', 'MonkeyKing', 10],
+             'Invoker': ['5G', 'Elf', 'Mage', 'Invoker', 10],
+             'Huskar': ['5G', 'Troll', 'Warrior', 'Huskar', 10],
+             'Jakiro': ['5G', 'Dragon', 'Mage', 'Jakiro', 10],
+             'Snapfire': ['5G', 'Goblin', 'Knight', 'Snapfire', 10],
+             'IO': ['5G', 'Elf', 'Elf', 'IO', 10]
+
+             }
 
 # Loads all hero icons to memory
-count2 = 0
 hero_icon_dict = {}
-for file in os.listdir('G:/icon'):
-    file_path = "G:/icon/" + file
-    hero_icon_dict[namelist[count2]] = cv2.imread(file_path)
-    count2 += 1
+for hero in namelist:
+    file_path = "C:/autochess_data/hero_icons/" + hero + ".png"
+    hero_icon_dict[hero] = cv2.imread(file_path)
 
 # Loads level icons to memory
 level_dict = {}
@@ -214,7 +272,7 @@ level_dict[""] = cv2.imread("G:/level/1.png", 0)
 level_dict["2"] = cv2.imread("G:/level/2.png", 0)
 level_dict["3"] = cv2.imread("G:/level/3.png", 0)
 
-TIMESLEEP = 0.2
+TIMESLEEP = 0.5
 
 HERO_ICON_WIDTH = 33
 FIRST_X_START = 711
@@ -322,140 +380,142 @@ def thread(function, arg=None):
 
 # DEFINES WHAT SCAN BUTTON DOES
 def Scan():
-    # try:
-    #     dota = gw.getWindowsWithTitle("Dota 2")[0]
-    #     dota.activate()
-    # except IndexError as error:
-    #     pass
-    # time.sleep(TIMESLEEP)
-    # pyautogui.click(x=348, y=798)
-    # pyautogui.click(x=348, y=798)
+    try:
+        dota = gw.getWindowsWithTitle("Dota 2")[0]
+        dota.activate()
+    except IndexError as error:
+        pass
+    time.sleep(TIMESLEEP)
+    pyautogui.click(x=348, y=798)
+    pyautogui.click(x=348, y=798)
 
-    # os.chdir("C:/autochess_data")
-    # screenshot = pyautogui.screenshot()
-    # screenshot = np.asarray(screenshot)
-    # player_status_list = [screenshot[438:449, 1705:1754], screenshot[525:536, 1705:1754], screenshot[613:624, 1705:1754], screenshot[701:712, 1705:1754], screenshot[788:799, 1705:1754],
-    #                       screenshot[875:886, 1705:1754]]
-    #
-    # failed_icon = cv2.imread("C:/autochess_data/failed_icon.png")
-    # transparent_failed_icon = cv2.imread("C:/autochess_data/transparent_failed_icon.png")
-    #
-    # num_of_lost_players = 0
-    # for i in range(0, len(player_status_list)):
-    #     if max(cv2.matchTemplate(player_status_list[i], failed_icon, cv2.TM_CCOEFF_NORMED)) > 0.8 or max(
-    #             cv2.matchTemplate(player_status_list[i], transparent_failed_icon, cv2.TM_CCOEFF_NORMED)) > 0.8:
-    #         num_of_lost_players = 6 - i
-    #         break
-    #
-    # keyboard.press_and_release("f3")
-    # time.sleep(0.5)
-    # on_stage_heroes = pyautogui.screenshot()
-    # keyboard.press_and_release("f3")
-    # # on_stage_heroes.save("on_stage_heroes.png")
-    # time.sleep(0.3)
-    #
-    # count = 0
-    # pyautogui.click(x=1602, y=233)
-    # pyautogui.click(x=1602, y=233)
-    # time.sleep(TIMESLEEP)
-    # img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    # count += 1
-    # img.save(f"{count}.jpg")
-    #
-    # pyautogui.click(x=1602, y=320)
-    # pyautogui.click(x=1602, y=320)
-    # time.sleep(TIMESLEEP)
-    # img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    # count += 1
-    # img.save(f"{count}.jpg")
-    #
-    # if num_of_lost_players < 6:
-    #     pyautogui.click(x=1602, y=409)
-    #     pyautogui.click(x=1602, y=409)
-    #     time.sleep(TIMESLEEP)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # if num_of_lost_players < 5:
-    #     pyautogui.click(x=1602, y=497)
-    #     pyautogui.click(x=1602, y=497)
-    #     time.sleep(TIMESLEEP)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # if num_of_lost_players < 4:
-    #     pyautogui.click(x=1602, y=586)
-    #     pyautogui.click(x=1602, y=586)
-    #     time.sleep(TIMESLEEP)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # if num_of_lost_players < 3:
-    #     pyautogui.click(x=1602, y=670)
-    #     pyautogui.click(x=1602, y=670)
-    #     pyautogui.moveTo(x=1546, y=620)
-    #     time.sleep(0.5)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # if num_of_lost_players < 2:
-    #     pyautogui.click(x=1602, y=758)
-    #     pyautogui.click(x=1602, y=758)
-    #     pyautogui.moveTo(x=1546, y=708)
-    #     time.sleep(0.5)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # if num_of_lost_players < 1:
-    #     pyautogui.click(x=1602, y=844)
-    #     pyautogui.click(x=1602, y=844)
-    #     pyautogui.moveTo(x=1546, y=794)
-    #     time.sleep(0.5)
-    #     img = pyautogui.screenshot(region=(527, 619, 848, 212))
-    #     count += 1
-    #     img.save(f"{count}.jpg")
-    # else:
-    #     img = cv2.imread("C:/autochess_data/Lost.png")
-    #     count += 1
-    #     cv2.imwrite(f"{count}.jpg", img)
-    #
-    # os.chdir("G:/darknet/")
-    # os.system("G:\darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknetsave/yolov4-obj_last_25.weights -ext_output -dont_show -out result.json < data/train.txt")
-    #
-    # f = open("G:/darknet/result.json")
-    # data = json.load(f)
+    os.chdir("C:/autochess_data")
+    screenshot = pyautogui.screenshot()
+    screenshot = np.asarray(screenshot)
+    player_status_list = [screenshot[438:449, 1705:1754], screenshot[525:536, 1705:1754], screenshot[613:624, 1705:1754], screenshot[701:712, 1705:1754], screenshot[788:799, 1705:1754],
+                          screenshot[875:886, 1705:1754]]
 
-    all_chess_pieces_list = [[], [], [], [], [], [], [], []]
-    # for i in range(8):
-    #     for hero in data[i]["objects"]:
-    #         all_chess_pieces_list[i].append(hero["name"])
+    failed_icon = cv2.imread("C:/autochess_data/failed_icon.png")
+    transparent_failed_icon = cv2.imread("C:/autochess_data/transparent_failed_icon.png")
 
-    temp_on_stage_list = [[], [], [], [], [], [], [], []]
+    num_of_lost_players = 0
+    for i in range(0, len(player_status_list)):
+        if max(cv2.matchTemplate(player_status_list[i], failed_icon, cv2.TM_CCOEFF_NORMED)) > 0.8 or max(
+                cv2.matchTemplate(player_status_list[i], transparent_failed_icon, cv2.TM_CCOEFF_NORMED)) > 0.8:
+            num_of_lost_players = 6 - i
+            break
+
+    keyboard.press_and_release("f3")
+    time.sleep(0.5)
+    on_stage_heroes = pyautogui.screenshot()
+    keyboard.press_and_release("f3")
+    on_stage_heroes.save("on_stage_heroes.png")
+    time.sleep(0.3)
+
+    count = 0
+    pyautogui.click(x=1602, y=233)
+    pyautogui.click(x=1602, y=233)
+    time.sleep(TIMESLEEP)
+    img = pyautogui.screenshot(region=(527, 619, 848, 212))
+    count += 1
+    img.save(f"{count}.jpg")
+
+    pyautogui.click(x=1602, y=320)
+    pyautogui.click(x=1602, y=320)
+    time.sleep(TIMESLEEP)
+    img = pyautogui.screenshot(region=(527, 619, 848, 212))
+    count += 1
+    img.save(f"{count}.jpg")
+
+    if num_of_lost_players < 6:
+        pyautogui.click(x=1602, y=409)
+        pyautogui.click(x=1602, y=409)
+        time.sleep(TIMESLEEP)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    if num_of_lost_players < 5:
+        pyautogui.click(x=1602, y=497)
+        pyautogui.click(x=1602, y=497)
+        time.sleep(TIMESLEEP)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    if num_of_lost_players < 4:
+        pyautogui.click(x=1602, y=586)
+        pyautogui.click(x=1602, y=586)
+        time.sleep(TIMESLEEP)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    if num_of_lost_players < 3:
+        pyautogui.click(x=1602, y=670)
+        pyautogui.click(x=1602, y=670)
+        pyautogui.moveTo(x=1546, y=620)
+        time.sleep(0.5)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    if num_of_lost_players < 2:
+        pyautogui.click(x=1602, y=758)
+        pyautogui.click(x=1602, y=758)
+        pyautogui.moveTo(x=1546, y=708)
+        time.sleep(0.5)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    if num_of_lost_players < 1:
+        pyautogui.click(x=1602, y=844)
+        pyautogui.click(x=1602, y=844)
+        pyautogui.moveTo(x=1546, y=794)
+        time.sleep(0.5)
+        img = pyautogui.screenshot(region=(527, 619, 848, 212))
+        count += 1
+        img.save(f"{count}.jpg")
+    else:
+        img = cv2.imread("C:/autochess_data/Lost.png")
+        count += 1
+        cv2.imwrite(f"{count}.jpg", img)
+
+    os.chdir("G:/darknet/")
+    os.system("G:\darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknetsave/yolov4-obj_last_25.weights -ext_output -dont_show -out result.json < data/train.txt")
+
+    f = open("G:/darknet/result.json")
+    data = json.load(f)
+
+    all_chess_pieces_list = ([], [], [], [], [], [], [], [])
+    for i in range(8):
+        for hero in data[i]["objects"]:
+            all_chess_pieces_list[i].append(hero["name"])
+
+    on_stage_heroes = cv2.imread("C:/autochess_data/on_stage_heroes.png")
+    on_stage_heroes_grayed = cv2.cvtColor(on_stage_heroes, cv2.COLOR_BGR2GRAY)
+    temp_on_stage_list = ([], [], [], [], [], [], [], [])
     os.chdir("C:/autochess_data/")
     count3 = 0
     num_of_lost_players = 0
@@ -463,10 +523,8 @@ def Scan():
         if i % 10 == 0:
             count3 = 0 + int(i / 10)
 
-        img = cv2.imread("C:/autochess_data/on_stage_heroes.png")
-        grayed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         hero_level = ""
-        level_icon_template = grayed_img[
+        level_icon_template = on_stage_heroes_grayed[
                               Y_COORDINATES_END[count3] + 1:Y_COORDINATES_END[count3] + 1 + LEVEL_ICON_HEIGHT,
                               X_COORDINATES_START[i % 10]:X_COORDINATES_END[i % 10]]
         for level in level_dict:
@@ -475,10 +533,11 @@ def Scan():
                 hero_level = level
                 break
 
-        template = img[Y_COORDINATES_START[count3]:Y_COORDINATES_END[count3],
+        template = on_stage_heroes[Y_COORDINATES_START[count3]:Y_COORDINATES_END[count3],
                    X_COORDINATES_START[i % 10]:X_COORDINATES_END[i % 10]]
         all_matches = []
         for hero_name in namelist:
+            cv2.waitKey(0)
             res = cv2.matchTemplate(hero_icon_dict[hero_name], template, cv2.TM_CCOEFF_NORMED)
             loc = np.where(res >= 0.65)
             if loc[0].size > 0:
@@ -510,6 +569,45 @@ def Scan():
         window.tableWidget.setItem(row, 4, QTableWidgetItem(str(Dict[hero][4])))
         window.tableWidget.item(row, 4).setForeground(colors[int(Dict[hero][0][0]) - 1])
         row += 1
+
+
+    CAS_dict_copy = copy.deepcopy(CAS_dict)
+
+    on_stage_CAS_icons = on_stage_heroes[
+                         on_stage_CAS_y_coors[7 - num_of_lost_players][0]:on_stage_CAS_y_coors[7 - num_of_lost_players][
+                             1],
+                         on_stage_CAS_x_coors[0]:on_stage_CAS_x_coors[1]]
+    on_stage_CAS_icons_grayed = cv2.cvtColor(on_stage_CAS_icons, cv2.COLOR_BGR2GRAY)
+
+    for CAS in CAS_names_and_icons:
+        result = cv2.matchTemplate(on_stage_CAS_icons, CAS[1], cv2.TM_CCOEFF_NORMED)
+        loc = np.where(result >= 0.9)
+        if loc[0].size == 0:
+            continue
+        else:
+            CAS_dict_copy[CAS[0]][0] = loc[0].size
+            for i in range(loc[0].size):
+                number_icon = on_stage_CAS_icons_grayed[loc[0][i] + 25:loc[0][i] + 37, loc[1][i] + 2:loc[1][i] + 19]
+                result_list = []
+                for icon in CAS_numbers_and_icons:
+                    if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.85:
+                        result_list.append((icon[0], cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED)))
+                result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
+                CAS_dict_copy[CAS[0]][1] += result_list[0][0]
+
+    row = 0
+    for CAS in CAS_dict_copy:
+        window.CAS_tableWidget.setItem(row, 0, QTableWidgetItem(CAS))
+        window.CAS_tableWidget.setItem(row, 1, QTableWidgetItem(str(CAS_dict_copy[CAS][0])))
+        window.CAS_tableWidget.setItem(row, 2, QTableWidgetItem(str(CAS_dict_copy[CAS][1])))
+        window.CAS_tableWidget.item(row, 0).setForeground(Qt.white)
+        window.CAS_tableWidget.item(row, 1).setTextAlignment(Qt.AlignHCenter)
+        window.CAS_tableWidget.item(row, 1).setForeground(Qt.white)
+        window.CAS_tableWidget.item(row, 2).setTextAlignment(Qt.AlignHCenter)
+        window.CAS_tableWidget.item(row, 2).setForeground(Qt.white)
+        row += 1
+
+
 
     global to_show_list
     to_show_list = all_chess_pieces_list
@@ -600,6 +698,21 @@ class TableSearch(QtWidgets.QTableWidget):
             timeout=self.resetSearch,
             interval=QtWidgets.QApplication.instance().keyboardInputInterval())
 
+        self.verticalHeader().hide()
+        self.setSortingEnabled(True)
+        self.setShowGrid(False)
+        self.horizontalHeader().setMinimumSectionSize(0)
+        self.setFrameStyle(QFrame.NoFrame)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
+        self.verticalHeader().setMinimumSectionSize(0)
+        self.verticalHeader().setDefaultSectionSize(30)
+        font = QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.horizontalHeader().setFont(font)
+        self.setFont(font)
+
 
     def resetSearch(self):
         self.searchWidget.setText('')
@@ -634,9 +747,6 @@ class TableSearch(QtWidgets.QTableWidget):
         self.updateSearchWidget()
 
 
-
-
-
 class Strategies(QWidget):
     def __init__(self):
         super().__init__()
@@ -644,10 +754,12 @@ class Strategies(QWidget):
 
     def UiC(self):
         self.layout = QGridLayout()
+        self.setWindowTitle("Strategies and Tips")
         self.setGeometry(520, 120, 500, 500)
-        self.completer = QCompleter(namelist + classandspecies)
+        self.completer = QCompleter(namelist + tuple(CAS_names))
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+
         self.SearchWidget = QLineEdit()
         self.SearchWidget.setCompleter(self.completer)
 
@@ -664,6 +776,7 @@ class Strategies(QWidget):
         self.SearchButton.clicked.connect(self.find)
 
         self.SaveButton = QPushButton("Save to Github")
+        self.SaveButton.clicked.connect(self.save_to_github)
 
         self.layout.addWidget(self.SearchWidget, 0, 0, 1, 3)
         self.layout.addWidget(self.SearchButton, 0, 3, 1, 1)
@@ -685,8 +798,50 @@ class Strategies(QWidget):
         if (event.type() == QtCore.QEvent.FocusOut and
                 source is self.TextBody):
             self.TextBody.setReadOnly(True)
+            text = self.TextBody.toMarkdown()
+            with open("C:/autochess_data/Strategies.txt", "w") as f:
+                f.write(text)
         return super(Strategies, self).eventFilter(source, event)
 
+    def save_to_github(self):
+
+        with open("C:/autochess_data/Strategies.txt", "w") as f:
+            f.write(self.TextBody.toMarkdown())
+        path = "https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt"
+        user = "Michael-Evergreen"
+        token = "10c025f6982de29bae3d60e51760f0863a79bb78"
+
+        r = requests.get(path, auth=(user, token))
+        if not r.ok:
+            print("Error when retrieving branch info from %s" % path)
+            print("Reason: %s [%d]" % (r.text, r.status_code))
+
+        sha = r.json()['sha']
+
+        content = ""
+
+        with open("C:/autochess_data/Strategies.txt", "r") as data:
+            data = data.read().encode("utf-8")
+            data = base64.b64encode(data)
+            content = data.decode("utf-8")
+
+        inputdata = {}
+        inputdata["path"] = path
+        inputdata["branch"] = "main"
+        inputdata["message"] = "abc"
+        inputdata["content"] = content
+        inputdata["sha"] = sha
+
+        try:
+            rPut = requests.put(path, auth=(user, token), data=json.dumps(inputdata))
+            if not rPut.ok:
+                print("Error when pushing to %s")
+                print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
+                raise Exception
+        except requests.exceptions.RequestException as e:
+            print(rPut)
+            print(rPut.headers)
+            print(rPut.text)
 
 class Myapp(QWidget):
     def __init__(self):
@@ -695,7 +850,7 @@ class Myapp(QWidget):
 
     def UiC(self):
         scan_button = QPushButton("Scan")
-        scan_button.clicked.connect(Scan)
+        scan_button.clicked.connect(lambda state, x=Scan: thread(Scan))
         scan_button.setGeometry(150, 300, 200, 100)
 
         show_predict_button = QPushButton("Show Predictions", self)
@@ -706,38 +861,56 @@ class Myapp(QWidget):
         show_strat_button.clicked.connect(self.show_strat)
         show_strat_button.setGeometry(20, 450, 100, 30)
 
+        font = QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+
         self.Strategies = Strategies()
+
+        self.CAS_tableWidget = TableSearch()
+        self.CAS_tableWidget.setRowCount(len(CAS_dict))
+        self.CAS_tableWidget.setColumnCount(3)
+        self.CAS_tableWidget.setHorizontalHeaderLabels(["Class/Species", "players", "chesspieces"])
+        self.CAS_tableWidget.horizontalHeader().setDefaultAlignment(Qt.AlignCenter)
+        self.CAS_tableWidget.setColumnWidth(0, 100)
+        self.CAS_tableWidget.setColumnWidth(1, 60)
+        self.CAS_tableWidget.setColumnWidth(2, 90)
+        self.CAS_tableWidget.setMaximumWidth(327)
+        self.CAS_tableWidget.viewport().installEventFilter(self)
+        self.CAS_tableWidget.doubleClicked.connect(self.onTableClicked)
+        p = self.CAS_tableWidget.palette()
+        p.setColor(QPalette.Base, QtGui.QColor(12, 12, 12))
+        self.CAS_tableWidget.setPalette(p)
+
+        row = 0
+        for CAS in CAS_dict:
+            self.CAS_tableWidget.setItem(row, 0, QTableWidgetItem(CAS))
+            self.CAS_tableWidget.setItem(row, 1, QTableWidgetItem(str(CAS_dict[CAS][0])))
+            self.CAS_tableWidget.setItem(row, 2, QTableWidgetItem(str(CAS_dict[CAS][1])))
+            self.CAS_tableWidget.item(row, 0).setForeground(Qt.white)
+            self.CAS_tableWidget.item(row, 1).setTextAlignment(Qt.AlignHCenter)
+            self.CAS_tableWidget.item(row, 1).setForeground(Qt.white)
+            self.CAS_tableWidget.item(row, 2).setTextAlignment(Qt.AlignHCenter)
+            self.CAS_tableWidget.item(row, 2).setForeground(Qt.white)
+            row +=1
 
         self.tableWidget = TableSearch()
         self.tableWidget.setRowCount(len(RSCP_Dict))
         self.tableWidget.setColumnCount(5)
-        self.tableWidget.verticalHeader().hide()
         self.tableWidget.setHorizontalHeaderLabels(["R", "Species", "Class", "Name", "NO"])
-        self.tableWidget.setSortingEnabled(True)
-        self.tableWidget.setShowGrid(False)
-        self.tableWidget.horizontalHeader().setMinimumSectionSize(0)
         self.tableWidget.horizontalHeader().setDefaultAlignment(Qt.AlignLeft)
-        self.tableWidget.setGeometry(1, 1, 50, 50)
         self.tableWidget.setColumnWidth(0, 26)
         self.tableWidget.setColumnWidth(1, 120)
         self.tableWidget.setColumnWidth(2, 110)
         self.tableWidget.setColumnWidth(3, 120)
         self.tableWidget.setColumnWidth(4, 30)
-        self.tableWidget.setFrameStyle(QFrame.NoFrame)
         self.tableWidget.setMaximumWidth(422)
-        self.tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        font = QFont()
-        font.setPointSize(11)
-        font.setBold(True)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
-        self.tableWidget.horizontalHeader().setFont(font)
-        self.tableWidget.setFont(font)
-        self.tableWidget.verticalHeader().setMinimumSectionSize(0)
-        self.tableWidget.verticalHeader().setDefaultSectionSize(30)
+
         p = self.tableWidget.palette()
         p.setColor(QPalette.Base, QtGui.QColor(12, 12, 12))
         self.tableWidget.setPalette(p)
         self.tableWidget.viewport().installEventFilter(self)
+
 
         colors = [Qt.white, QtGui.QColor(170, 170, 255), QtGui.QColor(90, 90, 255), QtGui.QColor(249, 28, 249),
                   QtGui.QColor(255, 151, 36)]
@@ -760,13 +933,19 @@ class Myapp(QWidget):
 
 
         layout = QGridLayout()
-        layout.addWidget(self.tableWidget, 0, 0)
-        layout.addWidget(scan_button, 1, 0)
-        layout.addWidget(show_predict_button, 2, 0)
-        layout.addWidget(show_strat_button, 3, 0)
+        layout1 = QVBoxLayout()
+        layout2 = QVBoxLayout()
+        layout1.addWidget(self.tableWidget)
+        layout2.addWidget(self.CAS_tableWidget)
+        layout.addLayout(layout2, 0, 2, 2, 3)
+        layout.addLayout(layout1, 2, 1, 5, 5)
+        layout.addWidget(scan_button, 8, 1, 1, 5)
+        layout.addWidget(show_predict_button, 9, 1, 1, 5)
+        layout.addWidget(show_strat_button, 10, 1, 1, 5)
 
         self.setWindowTitle("Autochess Probability Tracker")
-        self.setGeometry(1, 120, 500, 700)
+        self.setFixedSize(450, 1000)
+        self.setGeometry(1, 24, 450, 1000)
         self.setLayout(layout)
 
     def show_strat(self):
@@ -774,7 +953,7 @@ class Myapp(QWidget):
         return
 
     def onTableClicked(self, index):
-        if index.data().startswith(("1", "2", "3", "4", "5")):
+        if index.data().startswith(("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")):
             return
         data = "(cat) " + index.data()
         print(data)
@@ -785,9 +964,9 @@ class Myapp(QWidget):
 
 App = QApplication(sys.argv)
 
-# create the instance of our Window
+
 window = Myapp()
 window.show()
 
-# start the app
+
 sys.exit(App.exec())

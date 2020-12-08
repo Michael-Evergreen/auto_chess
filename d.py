@@ -20,7 +20,7 @@ import shutil
 import cv2
 # import time
 def show(img):
-    cv2.imshow(str(img),img)
+    cv2.imshow("aaa",img)
     cv2.waitKey(0)
 # CONFIDENCE_THRESHOLD = 0.3
 # NMS_THRESHOLD = 0.1
@@ -1081,14 +1081,14 @@ changes made:
 #     tk.Button(topLevel, text='Check code comments').grid(column=0)
 #     root.mainloop()
 
-from PyQt5.QtWidgets import *
-from PyQt5.Qt import Qt
-from PyQt5 import QtGui
-from PyQt5.QtCore import QVariant
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtCore import QVariantAnimation, QEasingCurve, QEventLoop, QTimer
-from PyQt5.QtGui import QColor, QPalette
-import sys
+# from PyQt5.QtWidgets import *
+# from PyQt5.Qt import Qt
+# from PyQt5 import QtGui
+# from PyQt5.QtCore import QVariant
+# from PyQt5.QtCore import pyqtSlot
+# from PyQt5.QtCore import QVariantAnimation, QEasingCurve, QEventLoop, QTimer
+# from PyQt5.QtGui import QColor, QPalette
+# import sys
 
 # class AnimationLabel(QLabel):
 #     def __init__(self, *args, **kwargs):
@@ -1148,10 +1148,10 @@ import sys
 #     ex = Widget()
 #     ex.show()
 #     sys.exit(app.exec_())
-
-from PyQt5 import QtCore, QtWidgets
-from random import choice
-from string import ascii_lowercase
+#
+# from PyQt5 import QtCore, QtWidgets
+# from random import choice
+# from string import ascii_lowercase
 
 # class TableSearch(QtWidgets.QTableWidget):
 #     def __init__(self):
@@ -1493,12 +1493,253 @@ import base64
 #         print(resp)
 #     else:
 #         print("nothing to update")
+import http
+#
+# token = "d77e1404d42233a084c3c377a73ceb3dbf00ced7"
+# filename="Strategies.txt"
+# repo = "Michael-Evergreen/auto_chess"
+# branch="main"
+# message = "abc"
+# # push_to_github(filename, repo, branch, token)
+# url = "https://api.github.com/repos/Michael-Evergreen/"
+# resp = requests.post(url, data=message, headers={"Content-Type": "application/json", "Authorization": "token " + token})
 
-token = "d77e1404d42233a084c3c377a73ceb3dbf00ced7"
-filename="Strategies.txt"
-repo = "Michael-Evergreen/auto_chess"
-branch="main"
 
-# push_to_github(filename, repo, branch, token)
-url = "https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt?ref=main"
-resp = requests.put(url, data=message, headers={"Content-Type": "application/json", "Authorization": "token " + token})
+#
+# resp = requests.put("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/hello.txt", headers={"Authorization: token d77e1404d42233a084c3c377a73ceb3dbf00ced7"})
+# print(resp)
+
+# r = requests.get('https://api.github.com/events')
+# print(r.text)
+# http PUT https://api.github.com/repos/lee-dohm/test-repo/contents/hello.txt \
+#   "Authorization: token REDACTED-TOKEN" \
+#   message="my commit message" \
+#   committer="{ \"name\": \"Lee Dohm\", \"email\": \"1038121+lee-dohm@users.noreply.github.com\" }" \
+#   content="bXkgbmV3IGZpbGUgY29udGVudHM="
+
+import requests
+import base64
+import json
+import datetime
+
+
+# def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token):
+#     '''
+#     Push file update to GitHub repo
+#
+#     :param gitHubFileName: the name of the file in the repo
+#     :param fileName: the name of the file on the local branch
+#     :param repo_slug: the github repo slug, i.e. username/repo
+#     :param branch: the name of the branch to push the file to
+#     :param user: github username
+#     :param token: github user token
+#     :return None
+#     :raises Exception: if file with the specified name cannot be found in the repo
+#     '''
+#
+#     message = "Automated update " + str(datetime.datetime.now())
+#     path = "https://api.github.com/repos/%s/branches/%s" % (repo_slug, branch)
+#
+#     r = requests.get(path, auth=(user, token))
+#     if not r.ok:
+#         print("Error when retrieving branch info from %s" % path)
+#         print("Reason: %s [%d]" % (r.text, r.status_code))
+#         raise
+#     rjson = r.json()
+#     treeurl = rjson['commit']['commit']['tree']['url']
+#     r2 = requests.get(treeurl, auth=(user, token))
+#     if not r2.ok:
+#         print("Error when retrieving commit tree from %s" % treeurl)
+#         print("Reason: %s [%d]" % (r2.text, r2.status_code))
+#         raise
+#     r2json = r2.json()
+#     sha = None
+#
+#     for file in r2json['tree']:
+#         # Found file, get the sha code
+#         if file['path'] == gitHubFileName:
+#             sha = file['sha']
+#
+#     # if sha is None after the for loop, we did not find the file name!
+#     if sha is None:
+#         print
+#         "Could not find " + gitHubFileName + " in repos 'tree' "
+#         raise Exception
+#
+#     with open(fileName) as data:
+#         content = base64.b64encode(data.read())
+#
+#     # gathered all the data, now let's push
+#     inputdata = {}
+#     inputdata["path"] = gitHubFileName
+#     inputdata["branch"] = branch
+#     inputdata["message"] = message
+#     inputdata["content"] = content
+#     if sha:
+#         inputdata["sha"] = str(sha)
+#
+#     updateURL = "https://api.github.com/repos/EBISPOT/RDF-platform/contents/" + gitHubFileName
+#     try:
+#         rPut = requests.put(updateURL, auth=(user, token), data=json.dumps(inputdata))
+#         if not rPut.ok:
+#             print("Error when pushing to %s" % updateURL)
+#             print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
+#             raise Exception
+#     except requests.exceptions.RequestException as e:
+#         print()
+        # print
+        # 'Something went wrong! I will print all the information that is available so you can figure out what happend!'
+        # print
+        # rPut
+        # print
+        # rPut.headers
+        # print
+        # rPut.text
+
+
+# path = "https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt"
+# user = "Michael-Evergreen"
+# token = "10c025f6982de29bae3d60e51760f0863a79bb78"
+#
+# r = requests.get(path, auth=(user, token))
+# if not r.ok:
+#     print("Error when retrieving branch info from %s" % path)
+#     print("Reason: %s [%d]" % (r.text, r.status_code))
+#
+# sha = r.json()['sha']
+#
+# content = ""
+# with open("C:/autochess_data/Strategies.txt", "r") as data:
+#     datautf = data.read().encode("utf-8")
+#     datab64 = base64.b64encode(datautf)
+#     b64string = datab64.decode("utf-8")
+#     # print(type(b64string))
+#     # content = str(data)[1:]
+#     content = b64string
+# # print(data)
+# # print(content)
+# inputdata = {}
+# inputdata["path"] = "https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt"
+# inputdata["branch"] = "main"
+# inputdata["message"] = "abc"
+# inputdata["content"] = content
+# inputdata["sha"] = sha
+#
+# try:
+#     rPut = requests.put("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt", auth=(user, token), data=json.dumps(inputdata))
+#     if not rPut.ok:
+#         print("Error when pushing to %s")
+#         print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
+#         raise Exception
+# except requests.exceptions.RequestException as e:
+#     print(rPut)
+#     print(rPut.headers)
+#     print(rPut.text)
+
+
+
+# print(rjson)
+# treeurl = rjson['commit']['commit']['tree']['url']
+
+# r2 = requests.get(treeurl, auth=(user, token))
+# if not r2.ok:
+
+# img_rgb = cv2.imread("G:/on_stage_chesspieces.png")
+# template = cv2.imread("G:/Knight.png")
+# # w, h = template.shape[::-1]
+# res = cv2.matchTemplate(img_rgb,template,cv2.TM_CCOEFF_NORMED)
+# threshold = 0.8
+# loc = np.where( res >= threshold)
+#
+# a = img_rgb[488+25:488+25+12, 1136+2:1136+19]
+import sys
+
+FIRST = 1136
+SECOND = 1169
+THIRD = 1202
+FOURTH = 1235
+FIFTH = 1268
+SIXTH = 1301
+
+SECONDY = 314
+
+# name = sys.argv[1]
+# print(name)
+#
+# # for pt in zip(*loc[::-1]):
+# # img_rgb = cv2.imread("G:/on_stage_chesspieces.png")
+# # a = img_rgb[SECONDY:SECONDY+25, FOURTH:FOURTH+25]
+# # cv2.imwrite("G:/" + name + ".png", a)
+# # b = img_rgb[751+25:751+25+12, 1136+2:1136+19]
+# # cv2.imwrite("G:/3.png", b)
+#
+# img = cv2.imread("G:/Warrior.png")
+# cv2.imshow("as", img)
+# cv2.waitKey(0)
+
+CAS_numbers = [int(file[:-4]) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+CAS_number_icons = [cv2.imread("C:/autochess_data/class_species_numbers/"+ file, 0) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+CAS_numbers_and_icons = tuple(zip(CAS_numbers, CAS_number_icons))
+
+CAS_names = [file[:-4] for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+CAS_icons = [cv2.imread("C:/autochess_data/class_species_icons/"+ file) for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+CAS_names_and_icons = tuple(zip(CAS_names, CAS_icons))
+
+CAS_dict = {'Aqir': [0, 0], 'Assassin': [0, 0], 'Beast': [0, 0], 'Chieftan': [0, 0], 'Demon': [0, 0], 'Dragon': [0, 0], 'Druid': [0, 0], 'Dwarf': [0, 0], 'Elemental': [0, 0], 'Elf': [0, 0], 'Faceless': [0, 0], 'Goblin': [0, 0], 'God': [0, 0], 'Human': [0, 0], 'Hunter': [0, 0], 'Inventor': [0, 0], 'Knight': [0, 0], 'Kobold': [0, 0], 'Mage': [0, 0], 'Monk': [0, 0], 'Naga': [0, 0], 'Ogre': [0, 0], 'Orc': [0, 0], 'Pandaren': [0, 0], 'Priest': [0, 0], 'Shaman': [0, 0], 'Troll': [0, 0], 'Undead': [0, 0], 'Warlock': [0, 0], 'Warrior': [0, 0], 'Wizard': [0, 0]}
+
+unused_CAS = []
+
+#     print(CAS_names_and_icons[i][0])
+#     show(CAS_names_and_icons[i][1])
+
+on_stage_CAS_x_coors = (1136,1327)
+on_stage_CAS_y_coors = ((202, 289), (202, 373), (202, 460), (202, 547), (202, 635), (202, 723), (202, 810), (202, 897))
+
+on_stage_heroes = cv2.imread("C:/autochess_data/on_stage_heroes.png")
+
+num_of_lost_players = 0
+on_stage_CAS_icons = on_stage_heroes[
+    on_stage_CAS_y_coors[7-num_of_lost_players][0]:on_stage_CAS_y_coors[7-num_of_lost_players][1],
+    on_stage_CAS_x_coors[0]:on_stage_CAS_x_coors[1]]
+on_stage_CAS_icons_grayed = cv2.cvtColor(on_stage_CAS_icons, cv2.COLOR_BGR2GRAY)
+img = []
+for CAS in CAS_names_and_icons:
+    result = cv2.matchTemplate(on_stage_CAS_icons, CAS[1], cv2.TM_CCOEFF_NORMED)
+    loc = np.where(result >= 0.9)
+    if loc[0].size == 0:
+        unused_CAS.append(CAS[0])
+    else:
+        CAS_dict[CAS[0]][0] = loc[0].size
+        for i in range(loc[0].size):
+            number_icon = on_stage_CAS_icons_grayed[loc[0][i]+25:loc[0][i]+37, loc[1][i]+2:loc[1][i]+19]
+            result_list = []
+            for icon in CAS_numbers_and_icons:
+                if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.85:
+                    result_list.append((icon[0], cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED)))
+            result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
+            CAS_dict[CAS[0]][1] += result_list[0][0]
+
+
+                    # CAS_dict[CAS[0]][1] += icon[0]
+                    # break
+
+print(CAS_dict)
+# number1 = on_stage_CAS_icons[112+25:112+37, 66+2:66+19]
+# number11 = CAS_numbers_and_icons[0][1]
+# cv2.imshow("number11", number11)
+# cv2.imshow("number1", number1)
+# cv2.imwrite("G:/1.png", number1)
+# cv2.imwrite("G:/11.png", number11)
+# # cv2.waitKey(0)
+# # print(CAS_dict)
+
+
+# print(loc[0][0])
+# print(np.unravel_index(result.argmax(), result.shape))
+
+
+
+
+
+
+
