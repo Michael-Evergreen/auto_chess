@@ -1521,7 +1521,14 @@ import requests
 import base64
 import json
 import datetime
-
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QVariant
+from PyQt5 import QtGui
+from PyQt5.QtGui import QColor, QPalette, QFont, QTextCursor
+import sys
+from string import ascii_lowercase
 
 # def push_to_repo_branch(gitHubFileName, fileName, repo_slug, branch, user, token):
 #     '''
@@ -1677,53 +1684,53 @@ SECONDY = 314
 # cv2.imshow("as", img)
 # cv2.waitKey(0)
 
-CAS_numbers = [int(file[:-4]) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
-CAS_number_icons = [cv2.imread("C:/autochess_data/class_species_numbers/"+ file, 0) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
-CAS_numbers_and_icons = tuple(zip(CAS_numbers, CAS_number_icons))
-
-CAS_names = [file[:-4] for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
-CAS_icons = [cv2.imread("C:/autochess_data/class_species_icons/"+ file) for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
-CAS_names_and_icons = tuple(zip(CAS_names, CAS_icons))
-
-CAS_dict = {'Aqir': [0, 0], 'Assassin': [0, 0], 'Beast': [0, 0], 'Chieftan': [0, 0], 'Demon': [0, 0], 'Dragon': [0, 0], 'Druid': [0, 0], 'Dwarf': [0, 0], 'Elemental': [0, 0], 'Elf': [0, 0], 'Faceless': [0, 0], 'Goblin': [0, 0], 'God': [0, 0], 'Human': [0, 0], 'Hunter': [0, 0], 'Inventor': [0, 0], 'Knight': [0, 0], 'Kobold': [0, 0], 'Mage': [0, 0], 'Monk': [0, 0], 'Naga': [0, 0], 'Ogre': [0, 0], 'Orc': [0, 0], 'Pandaren': [0, 0], 'Priest': [0, 0], 'Shaman': [0, 0], 'Troll': [0, 0], 'Undead': [0, 0], 'Warlock': [0, 0], 'Warrior': [0, 0], 'Wizard': [0, 0]}
-
-unused_CAS = []
-
-#     print(CAS_names_and_icons[i][0])
-#     show(CAS_names_and_icons[i][1])
-
-on_stage_CAS_x_coors = (1136,1327)
-on_stage_CAS_y_coors = ((202, 289), (202, 373), (202, 460), (202, 547), (202, 635), (202, 723), (202, 810), (202, 897))
-
-on_stage_heroes = cv2.imread("C:/autochess_data/on_stage_heroes.png")
-
-num_of_lost_players = 0
-on_stage_CAS_icons = on_stage_heroes[
-    on_stage_CAS_y_coors[7-num_of_lost_players][0]:on_stage_CAS_y_coors[7-num_of_lost_players][1],
-    on_stage_CAS_x_coors[0]:on_stage_CAS_x_coors[1]]
-on_stage_CAS_icons_grayed = cv2.cvtColor(on_stage_CAS_icons, cv2.COLOR_BGR2GRAY)
-img = []
-for CAS in CAS_names_and_icons:
-    result = cv2.matchTemplate(on_stage_CAS_icons, CAS[1], cv2.TM_CCOEFF_NORMED)
-    loc = np.where(result >= 0.9)
-    if loc[0].size == 0:
-        unused_CAS.append(CAS[0])
-    else:
-        CAS_dict[CAS[0]][0] = loc[0].size
-        for i in range(loc[0].size):
-            number_icon = on_stage_CAS_icons_grayed[loc[0][i]+25:loc[0][i]+37, loc[1][i]+2:loc[1][i]+19]
-            result_list = []
-            for icon in CAS_numbers_and_icons:
-                if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.85:
-                    result_list.append((icon[0], cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED)))
-            result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
-            CAS_dict[CAS[0]][1] += result_list[0][0]
+# CAS_numbers = [int(file[:-4]) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+# CAS_number_icons = [cv2.imread("C:/autochess_data/class_species_numbers/"+ file, 0) for file in os.listdir("C:/autochess_data/class_species_numbers/") if file.endswith("png")]
+# CAS_numbers_and_icons = tuple(zip(CAS_numbers, CAS_number_icons))
+#
+# CAS_names = [file[:-4] for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+# CAS_icons = [cv2.imread("C:/autochess_data/class_species_icons/"+ file) for file in os.listdir("C:/autochess_data/class_species_icons/") if file.endswith("png")]
+# CAS_names_and_icons = tuple(zip(CAS_names, CAS_icons))
+#
+# CAS_dict = {'Aqir': [0, 0], 'Assassin': [0, 0], 'Beast': [0, 0], 'Chieftan': [0, 0], 'Demon': [0, 0], 'Dragon': [0, 0], 'Druid': [0, 0], 'Dwarf': [0, 0], 'Elemental': [0, 0], 'Elf': [0, 0], 'Faceless': [0, 0], 'Goblin': [0, 0], 'God': [0, 0], 'Human': [0, 0], 'Hunter': [0, 0], 'Inventor': [0, 0], 'Knight': [0, 0], 'Kobold': [0, 0], 'Mage': [0, 0], 'Monk': [0, 0], 'Naga': [0, 0], 'Ogre': [0, 0], 'Orc': [0, 0], 'Pandaren': [0, 0], 'Priest': [0, 0], 'Shaman': [0, 0], 'Troll': [0, 0], 'Undead': [0, 0], 'Warlock': [0, 0], 'Warrior': [0, 0], 'Wizard': [0, 0]}
+#
+# unused_CAS = []
+#
+# #     print(CAS_names_and_icons[i][0])
+# #     show(CAS_names_and_icons[i][1])
+#
+# on_stage_CAS_x_coors = (1136,1327)
+# on_stage_CAS_y_coors = ((202, 289), (202, 373), (202, 460), (202, 547), (202, 635), (202, 723), (202, 810), (202, 897))
+#
+# on_stage_heroes = cv2.imread("C:/autochess_data/on_stage_heroes.png")
+#
+# num_of_lost_players = 0
+# on_stage_CAS_icons = on_stage_heroes[
+#     on_stage_CAS_y_coors[7-num_of_lost_players][0]:on_stage_CAS_y_coors[7-num_of_lost_players][1],
+#     on_stage_CAS_x_coors[0]:on_stage_CAS_x_coors[1]]
+# on_stage_CAS_icons_grayed = cv2.cvtColor(on_stage_CAS_icons, cv2.COLOR_BGR2GRAY)
+# img = []
+# for CAS in CAS_names_and_icons:
+#     result = cv2.matchTemplate(on_stage_CAS_icons, CAS[1], cv2.TM_CCOEFF_NORMED)
+#     loc = np.where(result >= 0.9)
+#     if loc[0].size == 0:
+#         unused_CAS.append(CAS[0])
+#     else:
+#         CAS_dict[CAS[0]][0] = loc[0].size
+#         for i in range(loc[0].size):
+#             number_icon = on_stage_CAS_icons_grayed[loc[0][i]+25:loc[0][i]+37, loc[1][i]+2:loc[1][i]+19]
+#             result_list = []
+#             for icon in CAS_numbers_and_icons:
+#                 if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.85:
+#                     result_list.append((icon[0], cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED)))
+#             result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
+#             CAS_dict[CAS[0]][1] += result_list[0][0]
 
 
                     # CAS_dict[CAS[0]][1] += icon[0]
                     # break
 
-print(CAS_dict)
+# print(CAS_dict)
 # number1 = on_stage_CAS_icons[112+25:112+37, 66+2:66+19]
 # number11 = CAS_numbers_and_icons[0][1]
 # cv2.imshow("number11", number11)
@@ -1737,9 +1744,144 @@ print(CAS_dict)
 # print(loc[0][0])
 # print(np.unravel_index(result.argmax(), result.shape))
 
+from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QProgressBar
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QVariant
+#
+# class MyTableWidgetItem(QTableWidgetItem):
+#     def __lt__(self, other):
+#         if ( isinstance(other, QTableWidgetItem) ):
+#             my_value, my_ok = self.data(Qt.EditRole).toInt()
+#             other_value, other_ok = other.data(Qt.EditRole).toInt()
+#
+#             if ( my_ok and other_ok ):
+#                 return my_value < other_value
+#
+#         return super(MyTableWidgetItem, self).__lt__(other)
+#
+# if ( __name__ == '__main__' ):
+#     app = None
+#     if ( QApplication.instance() is None ):
+#         app = QApplication([])
+#
+#     widget = QTableWidget()
+#     widget.setWindowFlags(Qt.Dialog)
+#     widget.setSortingEnabled(True)
+#
+#     widget.setRowCount(50)
+#     widget.setColumnCount(3)
+#     for row in range(50):
+#        # create a normal QTableWidgetItem
+#        a = QTableWidgetItem()
+#        a.setText(str(row))
+#        widget.setItem(row, 0, a)
+#
+#        # create a proper sorted item
+#        b = QTableWidgetItem()
+#        b.setData(Qt.EditRole, QVariant(row))
+#        widget.setItem(row, 1, b)
+#
+#        # create a custom sorted item
+#        c = MyTableWidgetItem()
+#        c.setData(Qt.EditRole, QVariant(row))
+#        widget.setItem(row, 2, c)
+#
+#     widget.show()
+#     if ( app ):
+#         app.exec_()
+
+from PyQt5.QtCore import Qt
+
+# class MyProgressBar(QProgressBar):
+#     def __init__(self):
+#         super().__init__()
+#         self.setRange(0, 0)
+#         self.setAlignment(Qt.AlignCenter)
+#         self._text = None
+#
+#     def setText(self, text):
+#         self._text = text
+#
+#     def text(self):
+#         return self._text
+#
+# app = QApplication([])
+#
+# p = MyProgressBar()
+# p.setText('finding resource...')
+# p.show()
+#
+# app.exec_()
+# user = "Michael-Evergreen"
+# token = "10c025f6982de29bae3d60e51760f0863a79bb78"
+# rGet = requests.get("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt", auth=(user, token))
+# print(rGet.text)
+
+from PyQt5.QtCore import QThread
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QDialog
+import re
+import json
+import os
+import pyautogui
+import time
+import cv2
+import numpy as np
+import keyboard
+import pygetwindow as gw
+import threading
+import copy
+import sys
+from PyQt5.QtWidgets import QApplication, QSizePolicy
+import requests
+import base64
+#
+
+TIMESLEEP = 0.6
+
+def thread(function, arg=None):
+    if arg == None:
+        x = threading.Thread(target=function)
+        x.start()
+    else:
+        x = threading.Thread(target=function(arg))
+        x.start()
+
+class Myapp(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.UiC()
+
+    def UiC(self):
+        self.scan_button = QPushButton("Scan", self)
+        self.scan_button.clicked.connect(self.Scan)
+        # self.scan_button.clicked.connect(lambda state, x=self.Scan: thread(self.Scan))
+        self.scan_button.move(0,0)
+
+        self.progressbar = QProgressBar()
+        self.progressbar.setRange(0, 0)
+        self.progressbar.setAlignment(Qt.AlignCenter)
+        self.progressbar.setFixedSize(700,500)
+        self.progressbar.move(800, 20)
+
+class WorkerThread(QThread):
+
+def Scan():
+
+        #
+        # self.progressbar.setText("assdsa...")
+
+        #
+        # global to_show_list
+        # to_show_list = all_chess_pieces_list
+        # global on_stage_list
+        # on_stage_list = temp_on_stage_list
+        # print(temp_on_stage_list)
+
+App = QApplication(sys.argv)
 
 
+window = Myapp()
+window.show()
 
 
-
-
+sys.exit(App.exec())
