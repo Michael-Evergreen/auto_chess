@@ -16,7 +16,7 @@ Tất cả mọi nhân vật (quân cờ) trong Autochess đều có mặt trong
 
 ![](images/Dota2-All-Characters.png)
  
-Việc cần làm bây giờ là click vào từng nhân vật để xem chúng dưới góc nhìn 3D, chụp ảnh chúng từ nhiều góc camera khác nhau và lưu vào các thư mục riêng biệt.
+Việc chúng ta muốn làm bây giờ là click vào từng nhân vật để xem chúng dưới góc nhìn 3D, chụp ảnh chúng từ nhiều góc camera khác nhau và lưu vào các thư mục riêng biệt.
 
 Nhiệm vụ này có tính lặp đi lặp lại khá cao nên có thể thực hiện bằng cách xác định các tọa độ chuột cần click và sử dụng các thư viện mô phỏng thao tác bàn phím và chuột như PyAutoGUI.
 
