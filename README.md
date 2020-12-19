@@ -992,7 +992,7 @@ class ScanThread(QThread):
 	…code…
 ```  
 
-Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín hiệu được phát với slots:
+Và hàm của nút Scan sẽ dùng để tạo worker thread này và nối tín hiệu được phát với slots:
 
 ```python
     def Scan(self):
@@ -2305,39 +2305,40 @@ contours, hierarchy = cv2.findContours(foregroundmask, cv2.RETR_TREE, cv2.CHAIN_
 
 - *Using foregroundmask is required because findContours can only work on images with white objects on black background.*
 
-- *The cv2.RETR_TREE parameter establishes the contour return method, in this case, OpenCV will retrieve all contours and return a complete hierarchy of nested contours.*
+- *The cv2.RETR_TREE parameter sets the contour return method, in this case, OpenCV will retrieve all contours and return a complete hierarchy of nested contours.*
 
-- *The cv2.CHAIN_APPROX_NONE parameter establishes the definition of contours, in this case, OpenCV will find all the points on the contours.*
+- *The cv2.CHAIN_APPROX_NONE parameter defines the complexity/richness of contours, in this case, OpenCV will find all the points on the contours.*
 
-Sử dụng hàm cv2.contourArea ta có thể tìm diện tích của các đường viền:
+Using cv2.contourArea method, we can find surface areas of all the contours:
 
 ```python
 areas = [cv2.contourArea(c) for c in contours]
 ```
 
-Sắp xếp theo thứ tự lớn đến bé và sử dụng hàm cv2.boundingRect ta được giá trị trả về là tọa độ trên cùng góc trái của đường viền lớn nhất cùng với chiều rộng và chiều dài:
+Sorting in descending order and using cv2.boundingRect method, we get the top left corner coordinate, width, and length of the largest contour:
 
 ```python
 temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
 ```
  
-### C/Dán nhãn:
+### C/Labels images:
 
 
-Nhãn trong mô hình YOLO có công thức như sau:
+YOLO label format:
 
 ![](images/yolo_format.png)
  
-Do vậy, công thức chuyển đổi từ các giá trị của OpenCV sang YOLO sẽ như sau:
+Hence, we need to reformat OpenCV's values into YOLO's values:
+
 x_yolo = (x + w)/2/IMAGE_WIDTH
 y_yolo = (y + h)/2/IMAGE_HEIGHT
 width_yolo = w /IMAGE_WIDTH
 height_yolo = h /IMAGE_HEIGHT
 
-Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
+We obtain classes' labels from their parent folders.
 
-### *Code được sử dụng để thực hiện điều này:*
+### *Code used to achieve this:*
 
 ```python
 import cv2
@@ -2529,27 +2530,27 @@ if __name__ == "__main__":
         main()
 ```
 
-Kết quả:
+Results:
  
 ![](images/background_removed_and_bb.png)
 
 ![](images/alchemist_bb.png)
 
-## 2/Trộn các nhân vật với nhau và tạo nhiễu
+## 2/Mixes characters together and adds noises
 
-Nếu chúng ta để nguyên các bức ảnh như thế này thì thuật toán truyền ngược (backpropagation) sẽ không hoạt động hiệu quả. Lý do là vì đối với mỗi mẻ (batch) ta có khoảng 64 bức ảnh được chọn ngẫu nhiên sau đó chia nhỏ tiếp thành các nhóm 8x8, do đó, mô hình sẽ chỉ “nhìn” thấy một lượng ít ỏi các lớp khác nhau (classes). Hàm mất mát (loss function) cũng vì thế mà chỉ phản ánh một phần nhỏ của “bức tranh toàn cảnh”. Backpropagation sẽ chạy đi chạy lại “bù đắp” (thay đổi trọng số) dựa trên một số ít lớp mỗi lần và sẽ mất rất nhiều thời gian để tìm cực tiểu (global minimum) hoặc bị kẹt ở cực tiểu địa phương (local minima). 
+If we were to feed these labeld images to a neural net, the backpropagation algorithm would not work very well. This is because for each batch, the network selects randomly 64 pictures and then further subdivides them into groups of 8x8, so the model will only "sees" a small number of different classes. The loss function would therefore only reflect a small part of the "big picture". Backpropagation would swing back and forth "compensating" (changing weights) forfew classes each time and will take a lot of time to find global minimum or stuck at the local minima.
 
 ![](images/localminima.png)
  
-Để khắc phục điều này, ta cần để mô hình “nhìn” thấy nhiều nhân vật nhất có thể mỗi mẻ, để chúng đều có “tiếng nói”, có ảnh hưởng đến loss function. Ta sẽ ghép 8 bức ảnh lại thành một để các nhân vật đứng cạnh nhau, đồng thời, ta cũng ghép file nhãn của chúng lại.
+To overcome this, we need to let the model "sees" see as many characters as possible each batch, so that they all have "a voice"/influence on the loss function. We will merge 8 images into one so that the characters can stand next to each other. We will also merge their label files.
 
 ![](images/mixed.png)
  
-Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung cấp thật nhiều nhiễu. Tạm thời, ta sẽ để các nhân vật đứng trên các background khác nhau trong game.
+In addition, to ensure model's flexibility, a lot of noises needs to be provided. For the time being, we will let the characters stand on different in-game backgrounds .
 
 ![](images/result.png)
 
-### *Code được sử dụng để thực hiện điều này:*
+### *Code used to achieve this:*
 
 ```python
 import cv2
@@ -2743,23 +2744,23 @@ for character_index in range(len(all_characters)):
         count += 1
 ```
 
-Kết quả ta được 160x212 = 33920 bức ảnh được dán nhãn.  
+After letting the code run for 40 minutes, we got 160x212 = 33920 labeled images.  
 
 ![](images/after_combin_folder.png)
 
-3 kỹ thuật có thể được sử dụng để tăng độ hiệu quả của mô hình mà ta có thể thực hiện ở bước này đó là kỹ thuật cutmix và mixup và mosaic được đề cập trong research paper của darknet yolov4 (https://arxiv.org/abs/2004.10934). Liệu chúng có cần thiết hay không thì ta sẽ đợi kết quả sau training.
+Three techniques that can be used to increase the effectiveness of the model that can be done at this step are: cutmix, mixup, and mosaic mentioned in the research paper of Darknet Yolov4 (https://arxiv.org/abs/2004.10934). We will wait for the results after training to see whether we need to implement them or not.
 
-## 3/Dán nhãn thủ công với script hỗ trợ
+## 3/Manually labels images with a helping script.
 
-Có thể dễ dàng nhận thấy hình ảnh ghép với background của chúng ta trông gượng ép. Đó là do các hình ảnh này thiếu hiệu ứng đổ bóng, sai lệch về nguồn sáng và cường độ sáng so với hình nền. Mô hình sẽ chuẩn đoán tốt hơn khi ta cung cấp cho chúng hình sát với thực tế, vậy nên, ta sẽ chụp và dán nhãn thủ công một số hình trong game.
+It's easy to see that our mixed images look forced. This is because incorrect illumination: wrong light sources, intensity, lacking shadows. The model will infer better when we let them learn on images that are close to reality. So, we will manually take some in-game images and label them.
 
-Một phần mềm phổ biến để dán nhãn là labelImg. Công việc dán nhãn thủ công đòi hỏi sự tỉ mỉ, kiên trì, và rất nhiều công sức. 
+One popular software for labeling is labelImg. This sort of work requires meticulousness, persistence, and a lot of effort.
 
-Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách viết một phần mềm tìm các vật thể lớn nhất trong hình, di chuột đến các vật thể đó và thực hiện thao tác vẽ đường viền. Việc còn lại chỉ là nhập tên của nhân vật.
+However, we can make this job easier by writing a software that finds the largest objects in an image, hovering over them, and drawing contours. All that's left to do is entering the characters' names.
 
 ![](images/manual_labelling_helper.png)
  
-### *Code được sử dụng để thực hiện điều này:*
+### *Code used to achieve this:*
 
 ```python
 import numpy as np
@@ -2941,54 +2942,55 @@ if __name__ == "__main__":
 ```
 
 
-## 4/Train mô hình
+## 4/Trains the model
 
-Kiến trúc được sử dụng là Darknet YoloV4 của AlexeyAB, ta cần tạo file config tuân theo format của Yolo:
+The architecture we will use is AlexeyAB's Darknet YoloV4. We need to create a config file in accordance with Yolo's format:
  
 ![](images/yolo_config_1.png)
 
-Mỗi batch trong YoloV4 là tổng số lượng hình ảnh mà mô hình phải “nhìn thấy” trước khi nó được cập nhật. Ta sẽ thiết lập ở mức mặc định = 64 hình
+Each batch in YoloV4 is the number of images the model has to "see" before it can be updated. We will set it at the default 64 images
 
-subdivisions là ước số để chia nhỏ batch nhằm tránh tình trạng quá tải bộ nhớ GPU. Con số này càng lớn thì mô hình sẽ train lâu hơn nhưng cũng giảm thiểu yêu cầu về bộ nhớ.   
+subdivisions are a divisor used to split the batch to avoid overloading the GPU memory. The larger this number, the longer the model will train, but also minimizes memory requirements.
 
-Vì ta chỉ có 33920 bức ảnh nên max_batches sẽ là 212 (tổng số nhân vật) x 2000 = 424000. Mô hình sẽ dừng train sau thời điểm này.
-Steps sẽ là 424000x0.8 và 424000x0.9 = 339200 và 381600, tại các iterations này, learning rate sẽ được thay đổi theo một tỷ lệ scalar.	
+Since we only have 33920 pictures, the max_batches will be 212 (total number of characters) x 2000 = 424000. The model will stop training after this point.
+Steps will be 424000x0.8 and 424000x0.9 = 339200 and 381600, at these iterations, the learning rate will be changed using a scalar.
 
-network size được để ở mặc định 416x416 do ta sẽ sử dụng google colab để train mô hình và bộ nhớ của GPU miễn phí chỉ có hạn.
+The network size is left at the default 416x416 since we will use google colab to train the model and the free GPU's memory is quite limited.
 
 ![](images/yolo_config_2.png)
 
-Thiết lập số lượng filters ở các convolutional layers, với 212 classes ta sẽ cần 651 filters.
+Setting the number of filters in the convolutional layers, with 212 classes we will need 651 filters.
 
 ![](images/yolo_config_3.png)
  
-Tạo file liệt kê tên của tất cả các classes theo thứ tự
+Creating a file listing the names of all classes in their respective order.
 
-Tạo file liệt kê đường dẫn đến folder chứa training data và testing data, đường dẫn đến folder để sau này lưu file trọng số “.weights” khi mô hình đang train.
+Creating a file listing the paths to folders containing training data and testing data, to folder for saving weight files later while the model is training.
 
 ![](images/yolo_config_4.png)
 
-Ta có thể dùng file trọng số đã được train sẵn, việc làm này được gọi là transfer learning và được khuyến khích vì mô hình sẽ converge (quy tụ) nhanh hơn do đã học được sẵn các hình, khối, nét cơ bản ở những lớp đầu. Tuy nhiên, các file trọng số này được train trên hình ảnh ngoài đời thực trong khi hình ảnh của chúng ta khá là cá biệt và là hình trong game nên ta sẽ không dùng những file trọng số này mà train từ đầu. 
-Average Loss và Mean Average Precision sau khoảng 25000 iterations:
+We can use a pre-trained weight file. This action is called transfer learning and is recommended since it helps the model converges faster because the model alreadly learned all the basic shapes, colors, features in their first layers. However, these weight files are trained on real-life images while our images are quite unique and are cartoonish so we won't use these weight files and instead train from scratch.
+
+Average Loss and Mean Average Precision after about 25000 iterations:
  
 ![](images/training_result.png)
  
 ![](images/map.png)
  
-Để mô hình dự đoán hình ảnh mới:
+Try model on new images:
 
 ![](images/test_after_train.png)
  
 
-# II.Tạo giao diện người dùng
+# II.CREATES A GRAPHIC USER INTERFACE
 
-Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
+The User Interface (GUI) is written using PyQt5, which is a wrapper library of Qt5
 
 ![](images/ourGUI1.png)
 
-## 1/Tạo bảng
+## 1/Creates a table widget
 
-Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
+First, we want to create a table class with a search function and able to provide a visual aid displaying the entered letters letting users know what they've just entered. We do this by  subclassing QtableWidget:
 
 ```python
 class TableSearch(QTableWidget):
@@ -2996,14 +2998,14 @@ class TableSearch(QTableWidget):
         super().__init__()
 ```
 
-Sau đó ta sẽ tạo một đối tượng QLabel đóng vai trò hiển thị những từ vừa được nhập. Ta để trạng thái mặc định của nó là ẩn:
+We then create a QLabel object that acts as the visual aid. We leave its default state as hidden:
 
 ```python
 	self.visual_aid = QLabel(self)
 	self.visual_aid.hide()
 ```
 
-Và một đối tượng Qtimer để tính toán thời gian giữa 2 lần phím được ấn. Khi nó vượt quá 1 khoảng thời gian nhất định (ở đây ta thiết lập nó bằng với khoảng cách giữa 2 lần tìm kiếm mặc định của QAppliation), Qtimer sẽ gửi timeout signal:
+Also a Qtimer object to calculate the time between two keypresses. When it exceeds a certain time period (here we set it to be equal to the distance between the 2 default QAppliation searches), Qtimer will send a timeout signal:
 
 ```python
 	self.timer = QTimer(
@@ -3012,7 +3014,7 @@ Và một đối tượng Qtimer để tính toán thời gian giữa 2 lần ph
 	    interval=QApplication.instance().keyboardInputInterval())
 ```
  
-Ta kết nối timeout signal với hàm(function) giúp xóa hết những từ đã được nhập và ẩn Qlabel đi:
+We connect the timeout signal a method to remove all entered words and hide Qlabel:
 
 ```python
     def reset_search(self):
@@ -3020,7 +3022,7 @@ Ta kết nối timeout signal với hàm(function) giúp xóa hết những từ
         self.visual_aid.hide()
 ```
 
-Sau đó ta định nghĩa lại (override) keyboardSearch của QTableWidget. Hàm này bắt tín hiệu ký tự được gửi từ QTableWidget. Ta muốn cứ mỗi khi có tín hiệu mới ta sẽ nối tín hiệu (ký tự) đó với các ký tự đã có trước đó và bắt đầu đếm thời gian:
+We then override the keyboardSearch method of the QTableWidget. This method captures the string signal sent from the QTableWidget. We want every time we have a new string, the method will connect that string to the already existing string and start counting time:
 
 ```python
     def keyboardSearch(self, string):
@@ -3037,7 +3039,7 @@ Sau đó ta định nghĩa lại (override) keyboardSearch của QTableWidget. H
         self.timer.start()
 ```    
 
-Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó mỗi khi người dùng ấn phím:
+Finally, we creates a method displaying QLabel and editing its font, its position each time the user presses the key:
 
 ```python
     def update_visual_aid(self):
@@ -3052,10 +3054,10 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-## 2/Tạo cửa sổ Tips and Strategies:
+## 2/Creates the Tips and Strategies window
 
 
-Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
+We create this window by inheriting Qwidget, which is the base class of all other subclasses in Qt5:
 
 ```python
 class Strategies(QWidget):
@@ -3063,7 +3065,7 @@ class Strategies(QWidget):
         super().__init__()
 ```
 
-Sau đó ta sẽ tạo một ô trống để nhập từ cần tìm kiếm. Ta cũng sẽ cho nó có khả năng gợi ý kết quả với QCompleter:
+Then we create a search bar to enter the search term. We'll also give it the ability to suggest results with QCompleter:
 
 ```python
 	self.search_widget = QLineEdit()
@@ -3073,7 +3075,7 @@ Sau đó ta sẽ tạo một ô trống để nhập từ cần tìm kiếm. Ta 
 	self.search_widget.setCompleter(self.completer)
 ```
 
-Và một ô vuông để hiển thị text. Text này sẽ được tải về từ một Github repo và lưu vào thư mục “autochess_data” mỗi lần phần mềm này được bật:
+Also a text body to display text. This text will be pulled from a Github repo and saved to the “autochess_data” folder each time this software is started:
 
 ```python
 	rGet = requests.get("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt")
@@ -3086,7 +3088,7 @@ Và một ô vuông để hiển thị text. Text này sẽ được tải về 
 	self.TextBody.setMarkdown(self.text)
 ```
 
-Ta có thể lưu lại những thay đổi ở text này vào Github repo với Github API:
+We save changes to this text to said Github repo with the Github API:
 
 ```python
     def save_to_github(self):
@@ -3110,15 +3112,15 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-## 3/Tạo luồng riêng (worker threads) cho các nút:
+## 3/Creates worker threads for buttons:
 
-Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
+Our GUI is displayed using a main thread, and by default, all interactions on the interface will be progessed on this main thread. So when we press a button, the function called by this button is sent to the main thread for processing. If this function takes too long, the UI will be freezed because the main thread only does one thing at a time.
 
-Nút Scan của chúng ta là một điển hình như vậy. Nút này làm nhiệm vụ đi qua các bàn cờ của người chơi và chụp ảnh, cho các ảnh này qua neural network để nhận diện nhân vật, chụp ảnh của bảng thống kê và sử dụng OpenCV template matching để nhận diện nhân vật, cấp đô, chủng tộc, nghề, số lượng, phân tích và tổng hợp kết quả.  
+Our Scan button is a case in point. This button is responsible for going through the chessboard of all players and taking pictures, passing these images through a neural network to recognize characters, taking pictures of the information table and using OpenCV template matching to identify characters, ranks, classes, species, numbers, and tabulating results.
 
-Ta khắc phục vấn đề này bằng cách tạo thread độc lập khác để xử lý hàm này. Tuy nhiên, thread độc lập này không hề biết đến sự tồn tại của giao diện người dùng của chúng ta nên không thể tương tác trực tiếp với giao diện. Việc nó có thể làm duy nhất là phát các tín hiệu và để để hàm gọi nó kết nối với các slots phù hợp. Các tín hiệu này có thể là bất kỳ đối tượng Python nào.
+We overcome this problem by creating another independent thread to handle this function. However, this standalone thread does not know our GUI's existance and cannot interact directly with it. The only thing it can do is transmitting signals so that the caller function can connect those singals appropriate slots. Signals can be any Python object.
 
-Ta thực hiện việc này bằng cách kế thừa Qthread, khai báo các tín hiệu và loại của chúng, và định nghĩa lại hàm run():
+We implement this by subclassing Qthread, declaring their signals and types, and overring the run () method:
 
 ```python
 class ScanThread(QThread):
@@ -3130,7 +3132,7 @@ class ScanThread(QThread):
 	…code…
 ```  
 
-Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín hiệu được phát với slots:
+Scan button's method is used to create this worker thread and connect the transmitted signal with slots:
 
 ```python
     def Scan(self):
@@ -3143,7 +3145,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-### *Toàn bộ code được sử dụng để viết giao diện người dùng:*
+### *Code used to make the GUI:*
 
 ```python
 import json
