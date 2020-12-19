@@ -19,7 +19,7 @@ Các vị trí cần click:
 
 ![](images/collect_data.png)
  
-Code được sử dụng:
+###Code được sử dụng để làm điều này:
 
 ```python
 
@@ -193,7 +193,7 @@ height_yolo = h /IMAGE_HEIGHT
 
 Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
 
-Code được sử dụng:
+###code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -406,7 +406,7 @@ Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung 
 
 ![](images/result.png)
 
-Code được sử dụng:
+###Code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -617,7 +617,7 @@ Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách vi�
 
 ![](images/manual_labelling_helper.png)
  
-Code được sử dụng:
+###Code được sử dụng để thực hiện điều này:
 
 ```python
 import numpy as np
@@ -844,7 +844,7 @@ Tạo giao diện người dùng
 
 Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
 
-##1/ Tạo bảng
+1/ Tạo bảng
 -----------
 
 Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
@@ -911,7 +911,7 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-##2/ Tạo cửa sổ Tips and Strategies:
+2/ Tạo cửa sổ Tips and Strategies:
 ----------------------------------
 
 Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
@@ -1003,7 +1003,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-Toàn bộ code được sử dụng để viết giao diện người dùng:
+###Toàn bộ code được sử dụng để viết giao diện người dùng:
 
 ```python
 import json
