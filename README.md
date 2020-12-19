@@ -21,7 +21,7 @@ Các vị trí cần click:
 
 ![](images/collect_data.png)
  
-### *Code được sử dụng để làm điều này:
+### *Code được sử dụng để làm điều này:*
 
 ```python
 
@@ -196,7 +196,7 @@ height_yolo = h /IMAGE_HEIGHT
 
 Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
 
-### *Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:*
 
 ```python
 import cv2
@@ -408,7 +408,7 @@ Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung 
 
 ![](images/result.png)
 
-### *Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:*
 
 ```python
 import cv2
@@ -618,7 +618,7 @@ Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách vi�
 
 ![](images/manual_labelling_helper.png)
  
-### *Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:*
 
 ```python
 import numpy as np
@@ -1002,7 +1002,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-### *Toàn bộ code được sử dụng để viết giao diện người dùng:
+### *Toàn bộ code được sử dụng để viết giao diện người dùng:*
 
 ```python
 import json
