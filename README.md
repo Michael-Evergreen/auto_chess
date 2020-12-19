@@ -22,7 +22,7 @@ Phần mềm sử dụng OpenCV, CNN Darket-Yolov4 để nhận diện hình ả
 
 ![](images/All_boards.png)
 
-Trong Autochess, mỗi người chơi sở hữu một bàn cờ để xếp quân. Họ sử dụng tiền để bốc thăm và mua quân mới. 3 quân cờ giống nhau sẽ nâng cấp thành bậc cao hơn (2 sao, 3 sao). Các quân cờ cùng một nghề hoặc bộ tộc khi ở cùng một đội sẽ kích hoạt hiệu ứng khiến chúng mạnh hơn. Các quân cờ và các nghề, bộ tộc đều có thể khắc chế và bị khắc chế bởi quân cờ, nghề, bộ tộc khác nhau. Mỗi quân cờ cũng chỉ có một số lượng quân nhất định, khi có quá nhiều người chơi mua một quân cờ, sẽ khó hơn để bốc thăm ra quân đó. 
+Trong Autochess, mỗi người chơi sở hữu một bàn cờ để xếp quân. Họ sử dụng tiền để bốc thăm và mua quân mới. 3 quân cờ giống nhau sẽ nâng cấp thành bậc cao hơn (2 sao, 3 sao). Các quân cờ cùng một nghề hoặc bộ tộc khi ở cùng một đội sẽ kích hoạt hiệu ứng khiến chúng mạnh hơn. Các quân cờ và các nghề, bộ tộc đều có thể khắc chế và bị khắc chế bởi quân cờ, nghề, bộ tộc khác. Mỗi quân cờ cũng chỉ có một số lượng quân nhất định, khi có quá nhiều người chơi mua một quân cờ, sẽ khó hơn để bốc thăm ra quân đó. 
 
 Một việc cần làm tốt để chiến thắng Autochess là theo dõi bàn cờ của người chơi khác để đoán đội hình họ định xây dựng và xây dựng đội hình khắc chế lại. Một việc quan trọng khác là tính toán xem những quân cờ nào đang được nhiều người chơi để tránh mua những quân này và mua những quân khác vì tỷ lệ bốc thăm ra chúng sẽ cao hơn, sẽ dễ nâng cấp chúng hơn. 
 
