@@ -233,8 +233,33 @@
 
 # (cat) Kunkka:
 
-- Hero's strengths
-- Hero's weaknesses
+1/ Hero's strengths:
+
+- Kunkka does extremely well agaisnt teams that like to bundle up together like
+  Hunters, Mages thanks to his "ghost ship" AOE skill. And since he often forms
+  a Warrior team, he performs best against Hunters.
+- Warriors excels in expanding existing leads but lacks damage and falters
+  later. Kunkka being a Human pairs very well with Lycan who is also a
+  Human/Warrior. Combining with one more Human, Warriors team can accumulate
+  experience advantage, available choices are:
+  + KOTL: AOE magic damage
+  + Lina: single magical burst
+  + CM: mana advantage, using skills before opponents
+  + LC: using Warriors' leads to build up damage and transition later.
+  + OmniKnight: heal and damage (not recommended)
+  + DragonKnight: damage (not recommended)
+
+2/ Hero's weaknesses:
+
+- Kunkka's dependence on "ghost ship" to deal damage coupled with "ghost
+  ship"'s delay means he is not very effective versus Nagas and Knights (high
+  magic resistance) and Assassins (dispersed team formation). Honorable
+  mentioned of such counters:
+  + Slark: Assassin, Naga
+  + TramAnh: Assasin, reflection damage block works well against
+    single-instanced damage
+  + OmniKnight: Knight, heal sustains well against Warriors' low damage
+  + Tide: Naga
 - Hero counters
 - Hero's countered by> TODO
 
@@ -765,7 +790,40 @@
 
 # (cat) Assassin:
 
-- Hero's strengths
+1/ Strengths:
+
+- Assassins biggest advantage is the ability to leap to enemies's back lines
+  and burst down their glass cannons. In order to really capitalize on this
+  advantage, it is recommended that all chesspieces are placed at the bottom of
+  the board to draw opponents' chesspieces forwards and make room for assassins
+  to jump.
+- Jumping Assassins also cause problems for AOE users like Terrorist, Gyro,
+  Kunkka, KOTL, Grim, and Disruptor.
+- Assassins work best against Hunters and Mages who like to stand behind front
+  lines
+- Assassins pair extremely well with Aqirs since there are already 2
+  chesspieces with these synergies: Nyx and SandKing. Also, when Aqir synergy
+  is activated, the newly spawn Assassins will get to do an extra jump.
+- Melee Assassins should be placed as far as possible based on enemies'
+  positioning (meaning they should be placed bottom left when enemies'
+  chesspieces are on the left because when 2 teams engage, enemies will appear
+  on the right) so they can jump straight to enemies' back line
+- Ranged Assassins like Phuong Anh should be placed far away, but not too far
+  (in this case, bottom right) so they can jump to left side of the board. They
+  can still attack while standing behind melee Assassins.
+
+2/ Weaknesses:
+
+- Assassins' reliance on physical damage means they don't work well against
+  high armored Warriors, their ability to leap is also negligible since all
+  Warriors can face-tank.
+- Elementals also counter Assassins since most Assassins are melee and will be
+  petrified. All elementals also have high AOE magical burst, most noticeably
+  Enigma and Razor who can nuke down Assassins who like to stay close to them.
+- Assassins' game-winning ability - leaping - is also their demise versus team
+  that know how to position. A team that clumps well together with the outer
+  layer made of tankers and the inner of high AOE magical burst like Nevermore,
+  Enigma, Techies can tear apart Assassin comp easily
 - Hero's weaknesses
 - Hero counters
 - Hero's countered by> TODO
