@@ -2,8 +2,8 @@
 
 ### Mục lục:
 - [GIỚI THIỆU](#giới-thiệu)
-- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#i.tao-mo-hinh-nhan-dien-hinh-anh)
-  - [Thu thập dữ liệu](#thu-thập-dữ-liệu)
+- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#i.tạo-mô-hình-nhận-diện-hình-ảnh)
+  - [Thu thập dữ liệu](#1/thu-thập-dữ-liệu)
 
 # GIỚI THIỆU
 
