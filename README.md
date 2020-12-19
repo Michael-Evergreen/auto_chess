@@ -1,4 +1,4 @@
-### *[Read this in English](#INTRODUCTION)*
+### *[Read this in English](#read-this-in-vietnamese)*
 
 ### Mục lục:
 - [GIỚI THIỆU](#giới-thiệu)
@@ -8,10 +8,10 @@
   - [Trộn các nhân vật với nhau và tạo nhiễu](#3trộn-các-nhân-vật-với-nhau-và-tạo-nhiễu)
   - [Dán nhãn thủ công với script hỗ trợ](#4dán-nhãn-thủ-công-với-script-hỗ-trợ)
   - [Train mô hình](#5train-mô-hình)
-- [TẠO GIAO DIỆN NGƯỜI DÙNG](#tạo-giao-diện-người-dùng)
+- [TẠO GIAO DIỆN NGƯỜI DÙNG](#iitạo-giao-diện-người-dùng)
   - [Tạo bảng](#1tạo-bảng)
   - [Tạo cửa sổ Tips and Strategies](#2tạo-cửa-sổ-tips-and-strategies)
-  - [Tạo luồng riêng (worker threads) cho các nút](3tạo-luồng-riêng-worker-threads-cho-các-nút)
+  - [Tạo luồng riêng (worker threads) cho các nút](#3tạo-luồng-riêng-worker-threads-cho-các-nút)
   
 
 # GIỚI THIỆU
@@ -936,7 +936,7 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-## 2/Tạo cửa sổ Tips and Strategies:
+## 2/Tạo cửa sổ Tips and Strategies
 
 
 Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
@@ -994,7 +994,7 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-## 3/Tạo luồng riêng (worker threads) cho các nút:
+## 3/Tạo luồng riêng (worker threads) cho các nút
 
 Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
 
@@ -2160,10 +2160,23 @@ window = Myapp()
 window.show()
 sys.exit(App.exec())
 ```
+### *[Read this in Vietnamese](#read-this-in-english)*
 
+### Table of contents:
+- [INTRODUCTION](#introduction)
+- [CREATES A IMAGE RECOGNITION MODEL](#icreates-a-image-recognition-model)
+  - [Collects Data](#1collect-data)
+  - [Removes background and mass labels single characters](#2Removes-background-and-mass-labels-single-characters)
+  - [Mixes characters together and adds noises](##3mixes-characters-together-and-adds-noises)
+  - [Manually labels images with a helping script](#4manually-labels-images-with-a-helping-script)
+  - [Trains the model](#5trains-the-model)
+- [CREATES A GRAPHIC USER INTERFACE](#iicreates-a-graphic-user-interface)
+  - [Creates a table widget](#1creates-a-table-widget)
+  - [Creates the Tips and Strategies window](#2creates-the-tips-and-strategies-window)
+  - [Creates worker threads for buttons](#3creates-worker-threads-for-buttons)
 
 # INTRODUCTION
-### *[Read this in Vietnamese](#giới-thiệu)*
+
 
 Autochess Probabilities and Line-up Tracker is an aiding software for Dota2-Autochess players - a real-time strategy game inspired by Dota2, Chess, Mahjong, and Rock-Paper-Scissor.
 
@@ -3144,7 +3157,7 @@ We save changes to this text to said Github repo with the Github API:
 	    print(rPut.text)
 ```
 
-## 3/Creates worker threads for buttons:
+## 3/Creates worker threads for buttons
 
 Our GUI is displayed using a main thread, and by default, all interactions on the interface will be progessed on this main thread. So when we press a button, the function called by this button is sent to the main thread for processing. If this function takes too long, the UI will be freezed because the main thread only does one thing at a time.
 
