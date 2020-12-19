@@ -1,12 +1,20 @@
-## [Read this in English](#INTRODUCTION)
+## *[Read this in English](#INTRODUCTION)*
 
 # GIỚI THIỆU
 
-Autochess Probabilities and Line-up Tracker là phần mềm hỗ trợ người chơi Dota2-Autochess - một game chiến thuật thời gian thực lấy cảm hứng từ Dota2 và Cờ vua, Mạt chược, và Búa Lá Kéo.
+Autochess Probabilities and Line-up Tracker là phần mềm hỗ trợ người chơi Dota2-Autochess - một game chiến thuật thời gian thực lấy cảm hứng từ Dota2, Cờ vua, Mạt chược, và Búa Lá Kéo.
+
 Phần mềm sử dụng OpenCV, CNN Darket-Yolov4 để nhận diện hình ảnh và PyQt5 để làm giao diện người dùng.
 
-Phần README này được sử dụng để mô tả lại quá trình xây dựng phần mềm này.
+![](images/All_boards.png)
 
+Trong Autochess, mỗi người chơi sở hữu một bàn cờ để xếp quân. Họ sử dụng tiền để bốc thăm và mua quân mới. 3 quân cờ giống nhau sẽ nâng cấp thành bậc cao hơn (2 sao, 3 sao). Các quân cờ cùng một nghề hoặc bộ tộc khi ở cùng một đội sẽ kích hoạt hiệu ứng khiến chúng mạnh hơn. Các quân cờ và các nghề, bộ tộc đều có thể khắc chế và bị khắc chế bởi quân cờ, nghề, bộ tộc khác nhau. Mỗi quân cờ cũng chỉ có một số lượng quân nhất định, khi có quá nhiều người chơi mua một quân cờ, sẽ khó hơn để bốc thăm ra quân đó. 
+
+Một việc cần làm tốt để chiến thắng Autochess là theo dõi bàn cờ của người chơi khác để đoán đội hình họ định xây dựng và xây dựng đội hình khắc chế lại. Một việc quan trọng khác là tính toán xem những quân cờ nào đang được nhiều người chơi để tránh mua những quân này và mua những quân khác vì tỷ lệ bốc thăm ra chúng sẽ cao hơn, sẽ dễ nâng cấp chúng hơn. 
+
+Mục đích của phần mềm này là chụp ảnh lại bàn cờ của những người chơi khác, nhận diện các quân cờ họ có và lập một bảng liệt kê số lượng quân cờ, nghề, bộ tộc đang được những người chơi khác sử dụng.
+
+Phần README này được sử dụng để mô tả lại quá trình xây dựng phần mềm này.
 
 # I.TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH
 
@@ -2144,6 +2152,14 @@ sys.exit(App.exec())
 Autochess Probabilities and Line-up Tracker is an aiding software for Dota2-Autochess players - a real-time strategy game inspired by Dota2, Chess, Mahjong, and Rock-Paper-Scissor.
 
 The software uses OpenCV, CNN Darket-Yolov4 for image recognition and PyQt5 for user interface.
+
+![](images/All_boards.png)
+
+In Autochess, each player has a chess board to place their chess pieces. They use money to draw and buy new troops. 3 identical chess pieces will upgrade to a higher tier (2 stars, 3 stars). Chess pieces of the same class or species on the same team activates a synergy that makes them stronger. Chess pieces, classes, and species have their checks and counters. Each piece also only has a limited number of them in the general pool. When there are too many players buying a same piece, that piece will be harder to roll for.
+
+One thing to do to win a game of Autochess is to observe other players' chess boards to guess the synergies they are planning to build and then build one that can counter them. Another important thing is to track pieces that being played by many players to avoid, and to buy others since the probability of drawing them will be higher. Hence, it will be easier to upgrade them.
+
+The purpose of this software is to take a picture of other players' chess boards, identify the chess pieces they have, and create a table listing the number of pieces, classes, and species being used.
 
 This README section is used to document the making of this software.
 
