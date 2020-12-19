@@ -92,7 +92,7 @@ Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script tr
 Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
 ===================================
 
-1. Loại bỏ background:
+## 1. Loại bỏ background:
 ----------------------
 
 Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
@@ -102,9 +102,9 @@ khởi tạo mô hình:
 ```python
 backgroundSubtractor = cv2.createBackgroundSubtractorKNN(history=1, dist2Threshold=1200)
 ```
-*history là tổng số khung hình (frame) trước đó mà được tính là có ảnh hưởng/được mang ra so sánh với khung hình hiện tại, ở đây chúng ta chỉ cần 1 khung hình trước đó.*
+- *history là tổng số khung hình (frame) trước đó mà được tính là có ảnh hưởng/được mang ra so sánh với khung hình hiện tại, ở đây chúng ta chỉ cần 1 khung hình trước đó.*
 
-*dist2Threshold là bình phương khoảng cách (mức độ khác biệt) khi so sánh các pixels của 2 bức ảnh với nhau. Nếu con số này được thiết lập quá thấp thì kết quả sẽ có rất nhiều nhiễu (noises), còn nếu được thiết lập quá cao thì nhân vật sẽ bị mất các chi tiết.*
+- *dist2Threshold là bình phương khoảng cách (mức độ khác biệt) khi so sánh các pixels của 2 bức ảnh với nhau. Nếu con số này được thiết lập quá thấp thì kết quả sẽ có rất nhiều nhiễu (noises), còn nếu được thiết lập quá cao thì nhân vật sẽ bị mất các chi tiết.*
 
 Có 3 thứ chúng ta có thể làm để tối thiểu noises, thứ nhất là bôi đen toàn bộ bức ảnh chỉ trừ một khoảng xung quanh nhân vật. Để làm được vậy ta cần xác định được các vị trí mà nhân vật sẽ đứng cũng như chiều dài và chiều rộng của nhân vật
 
@@ -116,9 +116,9 @@ background_image = cv2.GaussianBlur(background_image, (5, 5), 0)
 
 Thứ 3 là sử dụng các thuật toán giảmnhiễu sau khi đã loại bỏ background:
 
-- thuật toán hình thái học: Opening Morphology giúp loại bỏ các nhiễu nhỏ đứng một mình xung quanh nhân vật
-- thuật toán hình thái học Closing Morphology giúp lấp đầy các chi tiết bị mất của nhân vật
-- thuật toán giảm nhiễu không sử dụng giá trị trung bình của các điểm ảnh địa phương (Non-Local Means Denoising)
+- *thuật toán hình thái học: Opening Morphology giúp loại bỏ các nhiễu nhỏ đứng một mình xung quanh nhân vật*
+- *thuật toán hình thái học Closing Morphology giúp lấp đầy các chi tiết bị mất của nhân vật*
+- *thuật toán giảm nhiễu không sử dụng giá trị trung bình của các điểm ảnh địa phương (Non-Local Means Denoising)*
 
 ```python
 kernel = np.ones((3, 3), np.uint8)
@@ -127,7 +127,7 @@ foregroundmask = cv2.morphologyEx(foregroundmask, cv2.MORPH_CLOSE, kernel)
 foregroundmask = cv2.fastNlMeansDenoising(foregroundmask, None, 30, 7, 21)
 ```
 
-- Áp dụng mô hình:
+Áp dụng mô hình:
 
 ```python
 backgroundSubtractor.apply(background_image, learningRate=0.99)
@@ -137,19 +137,19 @@ backgroundSubtractor.apply(background_image, learningRate=0.99)
 foregroundmask = backgroundSubtractor.apply(character_image, learningRate=0)
 ```
 
-*learningRate là tốc độ mô hình “học” – khi đối số này bằng 0 thì mô hình sẽ hoàn toàn không cập nhật, khi đối số này bằng 1 thì background đã được học trước đó sẽ bị loại bỏ và mô hình sẽ được khởi tạo lại bắt đầu từ khung hình hiện tại. Ta cần mô hình học nhanh nhất có thể nên learningRate sẽ để ở mức 0.99. Ngoài ra mô hình cũng cần ít nhất 4 khung hình để “học”*
+- *learningRate là tốc độ mô hình “học” – khi đối số này bằng 0 thì mô hình sẽ hoàn toàn không cập nhật, khi đối số này bằng 1 thì background đã được học trước đó sẽ bị loại bỏ và mô hình sẽ được khởi tạo lại bắt đầu từ khung hình hiện tại. Ta cần mô hình học nhanh nhất có thể nên learningRate sẽ để ở mức 0.99. Ngoài ra mô hình cũng cần ít nhất 4 khung hình để “học”*
 
-*Ta áp dụng learningRate = 0 cho bức hình có nhân vật vì ta không muốn mô hình nghĩ bức hình đó là background. Giá trị trả về là mặt nạ của nhân vật.*
+- *Ta áp dụng learningRate = 0 cho bức hình có nhân vật vì ta không muốn mô hình nghĩ bức hình đó là background. Giá trị trả về là mặt nạ của nhân vật.*
 
-- Kết quả sau khi áp dụng bitwise_and giữa mặt nạ và hình ảnh ban đầu:
+Kết quả sau khi áp dụng bitwise_and giữa mặt nạ và hình ảnh ban đầu:
 
 ```python
 background_removed_image = cv2.bitwise_and(character_image, character_image, mask=foregroundmask)
 ```
 
-![](Alchemist_pos_1_00.png)
+![](images/Alchemist_pos_1_00.png)
 
-2. Tìm đường viền:
+##2. Tìm đường viền:
 ------------------
 
 Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
@@ -159,11 +159,11 @@ ta có thể tìm đường viền cho tất cả các vật thể trong hình �
 contours, hierarchy = cv2.findContours(foregroundmask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 ```
 
-*Bắt buộc phải sử dụng mặt nạ foregroundmask vì findContours chỉ có thể tìm đường viền quanh những vật thể trắng trên nền đen (RGB = 255).*
+- *Bắt buộc phải sử dụng mặt nạ foregroundmask vì findContours chỉ có thể tìm đường viền quanh những vật thể trắng trên nền đen (RGB = 255).*
 
-*Tham số cv2.RETR_TREE thiết lập phương thức trả về đường viền, ở đây, OpenCV sẽ truy xuất tất cả các đường viền trả về một hệ thống phân cấp đầy đủ của các đường viền được lồng vào nhau.*
+- *Tham số cv2.RETR_TREE thiết lập phương thức trả về đường viền, ở đây, OpenCV sẽ truy xuất tất cả các đường viền trả về một hệ thống phân cấp đầy đủ của các đường viền được lồng vào nhau.*
 
-*Tham số cv2.CHAIN_APPROX_NONE thiết lập thuật toán xác định đường viền, ở đây, OpenCV sẽ tìm tất cả các điểm trên đường viền.*
+- *Tham số cv2.CHAIN_APPROX_NONE thiết lập thuật toán xác định đường viền, ở đây, OpenCV sẽ tìm tất cả các điểm trên đường viền.*
 
 Sử dụng hàm cv2.contourArea ta có thể tìm diện tích của các đường viền:
 
@@ -178,7 +178,7 @@ temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
 ```
  
-3. Dán nhãn:
+##3. Dán nhãn:
 ------------
 
 Nhãn trong mô hình YOLO có công thức như sau:
@@ -844,7 +844,7 @@ Tạo giao diện người dùng
 
 Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
 
-1/ Tạo bảng
+##1/ Tạo bảng
 -----------
 
 Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
@@ -911,7 +911,7 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-2/ Tạo cửa sổ Tips and Strategies:
+##2/ Tạo cửa sổ Tips and Strategies:
 ----------------------------------
 
 Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
@@ -969,7 +969,7 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-3/ Tạo luồng riêng (worker threads) cho các nút:
+##3/ Tạo luồng riêng (worker threads) cho các nút:
 ------------------------------------------------
 
 Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
@@ -1003,7 +1003,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-Code được sử dụng để viết toàn bộ giao diện người dùng:
+Toàn bộ code được sử dụng để viết giao diện người dùng:
 
 ```python
 import json
