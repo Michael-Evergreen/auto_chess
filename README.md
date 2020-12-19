@@ -1,12 +1,14 @@
-Giới thiệu
-===================================
+# GIỚI THIỆU
+
 Autochess Probabilities and Line-up Tracker là phần mềm hỗ trợ người chơi Dota2-Autochess - một game chiến thuật thời gian thực lấy cảm hứng từ Dota2 và Cờ vua, Mạt chược, và Búa Lá Kéo.
 Phần mềm sử dụng OpenCV, CNN Darket-Yolov4 để nhận diện hình ảnh và PyQt5 để làm giao diện người dùng.
 
 Phần README này được sử dụng để mô tả lại quá trình xây dựng phần mềm này.
 
-Thu thập dữ liệu hình ảnh
-===================================
+# I.TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH
+
+## 1/Thu thập dữ liệu
+
 Tất cả mọi nhân vật (quân cờ) trong Autochess đều có mặt trong bức hình dưới đây (83 nhân vật). Tuy nhiên hầu hết các nhân vật trong Autochess đều có 3 cấp độ tương ứng với 3 trang phục khác nhau nên số lượng hình ảnh cần thu thập thực chất lớn gấp 3.
 
 ![](images/Dota2-All-Characters.png)
@@ -19,7 +21,7 @@ Các vị trí cần click:
 
 ![](images/collect_data.png)
  
-###Code được sử dụng để làm điều này:
+#### Code được sử dụng để làm điều này:
 
 ```python
 
@@ -89,11 +91,10 @@ Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script tr
  
 ![](images/folder_after_2_3.png)
 
-Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
-===================================
+## 2/Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
 
-1/Loại bỏ background:
-------------------------------------------------
+### a/Loại bỏ background:
+
 
 Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
 
@@ -149,8 +150,8 @@ background_removed_image = cv2.bitwise_and(character_image, character_image, mas
 
 ![](images/Alchemist_pos_1_00.png)
 
-2/Tìm đường viền:
-------------------
+### b/Tìm đường viền:
+
 
 Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
 ta có thể tìm đường viền cho tất cả các vật thể trong hình ảnh. Do đã loại bỏ background, ta có thể dễ dàng xác định nhân vật của chúng ta bằng cách tìm đường viền có diện tích lớn nhất.
@@ -178,8 +179,8 @@ temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
 ```
  
-3/Dán nhãn:
-------------
+### c/Dán nhãn:
+
 
 Nhãn trong mô hình YOLO có công thức như sau:
 
@@ -193,7 +194,7 @@ height_yolo = h /IMAGE_HEIGHT
 
 Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
 
-###code được sử dụng để thực hiện điều này:
+#### Code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -391,8 +392,7 @@ Kết quả:
 
 ![](images/alchemist_bb.png)
 
-Trộn các nhân vật với nhau và tạo nhiễu
-=======================================
+## 2/Trộn các nhân vật với nhau và tạo nhiễu
 
 Nếu chúng ta để nguyên các bức ảnh như thế này thì thuật toán truyền ngược (backpropagation) sẽ không hoạt động hiệu quả. Lý do là vì đối với mỗi mẻ (batch) ta có khoảng 64 bức ảnh được chọn ngẫu nhiên sau đó chia nhỏ tiếp thành các nhóm 8x8, do đó, mô hình sẽ chỉ “nhìn” thấy một lượng ít ỏi các lớp khác nhau (classes). Hàm mất mát (loss function) cũng vì thế mà chỉ phản ánh một phần nhỏ của “bức tranh toàn cảnh”. Backpropagation sẽ chạy đi chạy lại “bù đắp” (thay đổi trọng số) dựa trên một số ít lớp mỗi lần và sẽ mất rất nhiều thời gian để tìm cực tiểu (global minimum) hoặc bị kẹt ở cực tiểu địa phương (local minima). 
 
@@ -406,7 +406,7 @@ Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung 
 
 ![](images/result.png)
 
-###Code được sử dụng để thực hiện điều này:
+#### Code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -606,8 +606,7 @@ Kết quả ta được 160x212 = 33920 bức ảnh được dán nhãn.
 
 3 kỹ thuật có thể được sử dụng để tăng độ hiệu quả của mô hình mà ta có thể thực hiện ở bước này đó là kỹ thuật cutmix và mixup và mosaic được đề cập trong research paper của darknet yolov4 (https://arxiv.org/abs/2004.10934). Liệu chúng có cần thiết hay không thì ta sẽ đợi kết quả sau training.
 
-Dán nhãn thủ công với script hỗ trợ
-===================================
+## 3/Dán nhãn thủ công với script hỗ trợ
 
 Có thể dễ dàng nhận thấy hình ảnh ghép với background của chúng ta trông gượng ép. Đó là do các hình ảnh này thiếu hiệu ứng đổ bóng, sai lệch về nguồn sáng và cường độ sáng so với hình nền. Mô hình sẽ chuẩn đoán tốt hơn khi ta cung cấp cho chúng hình sát với thực tế, vậy nên, ta sẽ chụp và dán nhãn thủ công một số hình trong game.
 
@@ -617,7 +616,7 @@ Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách vi�
 
 ![](images/manual_labelling_helper.png)
  
-###Code được sử dụng để thực hiện điều này:
+#### Code được sử dụng để thực hiện điều này:
 
 ```python
 import numpy as np
@@ -799,8 +798,7 @@ if __name__ == "__main__":
 ```
 
 
-Train mô hình
-=============
+## 4/Train mô hình
 
 Kiến trúc được sử dụng là Darknet YoloV4 của AlexeyAB, ta cần tạo file config tuân theo format của Yolo:
  
@@ -839,13 +837,13 @@ Average Loss và Mean Average Precision sau khoảng 25000 iterations:
 ![](images/test_after_train.png)
  
 
-Tạo giao diện người dùng
-========================
+# II.Tạo giao diện người dùng
 
 Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
 
-1/ Tạo bảng
------------
+![](images/ourGUI.png)
+
+## 1/Tạo bảng
 
 Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
 
@@ -911,8 +909,8 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-2/ Tạo cửa sổ Tips and Strategies:
-----------------------------------
+# 2/Tạo cửa sổ Tips and Strategies:
+
 
 Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
 
@@ -969,8 +967,7 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-3/ Tạo luồng riêng (worker threads) cho các nút:
-------------------------------------------------
+# 3/Tạo luồng riêng (worker threads) cho các nút:
 
 Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
 
@@ -1003,7 +1000,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-###Toàn bộ code được sử dụng để viết giao diện người dùng:
+#### Toàn bộ code được sử dụng để viết giao diện người dùng:
 
 ```python
 import json
