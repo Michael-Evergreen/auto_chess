@@ -1077,14 +1077,14 @@ namelist = (
     'BeastMaster',
     'BH',
     # 'Blood',
-    'Brood',
+    'Spider',
     # 'Centaur',
     'Chaos',
     'Chen',
     # 'Clinkz',
     'Clock',
     'CM',
-    'DarkWillow',
+    # 'DarkWillow',
     'Dazzle',
     'Disruptor',
     'Doom',
@@ -1280,8 +1280,8 @@ RSCP_Dict = {
     'LoneDruid': ['4G', 'Beast', 'Druid', 'LoneDruid', 15],
     'Chen': ['4G', 'Orc', 'Priest', 'Chen', 15],
     'Nyx': ['4G', 'Aqir', 'Assassin', 'Nyx', 15],
-    'Brood': ['4G', 'Aqir', 'Hunter', 'Brood', 15],
-    'EarthShaker': ['4G', 'Chieftan', 'Shaman', 'EarthShaker', 15],
+    'Spider': ['4G', 'Aqir', 'Hunter', 'Spider', 15],
+    'EarthShaker': ['4G', 'Tauren', 'Shaman', 'EarthShaker', 15],
     'Disruptor': ['5G', 'Orc', 'Shaman', 'Disruptor', 10],
     'Gyro': ['5G', 'Dwarf', 'Inventor', 'Gyro', 10],
     'Tide': ['5G', 'Naga', 'Hunter', 'Tide', 10],
@@ -1296,7 +1296,7 @@ RSCP_Dict = {
     'Invoker': ['5G', 'Elf', 'Mage', 'Invoker', 10],
     'Huskar': ['5G', 'Troll', 'Warrior', 'Huskar', 10],
     'Jakiro': ['5G', 'Dragon', 'Mage', 'Jakiro', 10],
-    'Snapfire': ['5G', 'Goblin', 'Knight', 'Snapfire', 10],
+    'Grandma': ['5G', 'Goblin', 'Knight', 'Grandma', 10],
     'IO': ['5G', 'Elf', 'Elf', 'IO', 10]
 
 }
@@ -1771,7 +1771,7 @@ class Myapp(QWidget):
         self.editbox.move(405, 879)
 
         # Sets main GUI's position
-        self.setWindowTitle("Autochess Probability Tracker")
+        self.setWindowTitle("Autochess Probability and Probability Tracker")
         self.setFixedSize(450, 980)
         self.setGeometry(1, 24, 450, 980)
 
@@ -1911,14 +1911,14 @@ class ScanThread(QThread):
         time.sleep(timesleep)
         img = pyautogui.screenshot(region=(527, 619, 848, 212))
         count += 1
-        img.save(f"{count}.png")
+        img.save(f"{count}.jpg")
 
         pyautogui.click(x=1602, y=320)
         pyautogui.click(x=1602, y=320)
         time.sleep(timesleep)
         img = pyautogui.screenshot(region=(527, 619, 848, 212))
         count += 1
-        img.save(f"{count}.png")
+        img.save(f"{count}.jpg")
 
         if num_of_lost_players < 6:
             pyautogui.click(x=1602, y=409)
@@ -1926,11 +1926,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 5:
             pyautogui.click(x=1602, y=497)
@@ -1938,11 +1938,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 4:
             pyautogui.click(x=1602, y=586)
@@ -1950,11 +1950,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 3:
             pyautogui.click(x=1602, y=670)
@@ -1963,11 +1963,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 2:
             pyautogui.click(x=1602, y=758)
@@ -1976,11 +1976,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 1:
             pyautogui.click(x=1602, y=844)
@@ -1989,11 +1989,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         # Sends progress bar current progress
         self.update_progress.emit("Feeding images through a neural network...")
@@ -2001,7 +2001,7 @@ class ScanThread(QThread):
         os.chdir("G:/darknet/")
 
         # Feeds images to neural net
-        os.system("G:\darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknetsave/yolov4-obj_last_25.weights -ext_output -dont_show -out result.json < data/train.txt")
+        os.system("G:/darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknet/backup/yolov4-obj_25000.weights -ext_output -dont_show -out result.json < data/train.txt")
 
         # Parses neural net json result
         data = json.load(open("G:/darknet/result.json"))
@@ -2093,6 +2093,7 @@ class ScanThread(QThread):
                     result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
                     CAS_dict_copy[CAS[0]][1] += result_list[0][0]
 
+
         # Emits dict signal carrying new class and species table information back to caller function
         self.thread_complete_CAS.emit(CAS_dict_copy)
 
@@ -2108,13 +2109,13 @@ class Show_Predictions_Thread(QThread):
                       (125, 0, 255), (255, 0, 125), (125, 255, 0), (0, 255, 125), (0, 125, 255), (255, 125, 0),
                       (125, 75, 0),
                       (0, 75, 125), (0, 125, 75), (75, 125, 0), (75, 0, 125), (125, 0, 75)]
-            data = json.load(open("C:/autochess_data/result.json"))
+            data = json.load(open("G:/darknet/result.json"))
             on_stage_img = cv2.imread("C:/autochess_data/on_stage_heroes.png")
             first_half = np.zeros((0, 1160, 3), dtype=np.uint8)
             second_half = np.zeros((0, 1160, 3), dtype=np.uint8)
             os.chdir("C:/autochess_data")
             for i in range(0, len(data)):
-                img = cv2.imread(f"C:/autochess_data/{i + 1}.png")
+                img = cv2.imread(f"C:/autochess_data/{i + 1}.jpg")
                 for hero in data[i]['objects']:
                     x_start = round(
                         hero["relative_coordinates"]["center_x"] * WIDTH - hero["relative_coordinates"][
@@ -3240,14 +3241,14 @@ namelist = (
     'BeastMaster',
     'BH',
     # 'Blood',
-    'Brood',
+    'Spider',
     # 'Centaur',
     'Chaos',
     'Chen',
     # 'Clinkz',
     'Clock',
     'CM',
-    'DarkWillow',
+    # 'DarkWillow',
     'Dazzle',
     'Disruptor',
     'Doom',
@@ -3443,8 +3444,8 @@ RSCP_Dict = {
     'LoneDruid': ['4G', 'Beast', 'Druid', 'LoneDruid', 15],
     'Chen': ['4G', 'Orc', 'Priest', 'Chen', 15],
     'Nyx': ['4G', 'Aqir', 'Assassin', 'Nyx', 15],
-    'Brood': ['4G', 'Aqir', 'Hunter', 'Brood', 15],
-    'EarthShaker': ['4G', 'Chieftan', 'Shaman', 'EarthShaker', 15],
+    'Spider': ['4G', 'Aqir', 'Hunter', 'Spider', 15],
+    'EarthShaker': ['4G', 'Tauren', 'Shaman', 'EarthShaker', 15],
     'Disruptor': ['5G', 'Orc', 'Shaman', 'Disruptor', 10],
     'Gyro': ['5G', 'Dwarf', 'Inventor', 'Gyro', 10],
     'Tide': ['5G', 'Naga', 'Hunter', 'Tide', 10],
@@ -3459,7 +3460,7 @@ RSCP_Dict = {
     'Invoker': ['5G', 'Elf', 'Mage', 'Invoker', 10],
     'Huskar': ['5G', 'Troll', 'Warrior', 'Huskar', 10],
     'Jakiro': ['5G', 'Dragon', 'Mage', 'Jakiro', 10],
-    'Snapfire': ['5G', 'Goblin', 'Knight', 'Snapfire', 10],
+    'Grandma': ['5G', 'Goblin', 'Knight', 'Grandma', 10],
     'IO': ['5G', 'Elf', 'Elf', 'IO', 10]
 
 }
@@ -3934,7 +3935,7 @@ class Myapp(QWidget):
         self.editbox.move(405, 879)
 
         # Sets main GUI's position
-        self.setWindowTitle("Autochess Probability Tracker")
+        self.setWindowTitle("Autochess Probability and Probability Tracker")
         self.setFixedSize(450, 980)
         self.setGeometry(1, 24, 450, 980)
 
@@ -4074,14 +4075,14 @@ class ScanThread(QThread):
         time.sleep(timesleep)
         img = pyautogui.screenshot(region=(527, 619, 848, 212))
         count += 1
-        img.save(f"{count}.png")
+        img.save(f"{count}.jpg")
 
         pyautogui.click(x=1602, y=320)
         pyautogui.click(x=1602, y=320)
         time.sleep(timesleep)
         img = pyautogui.screenshot(region=(527, 619, 848, 212))
         count += 1
-        img.save(f"{count}.png")
+        img.save(f"{count}.jpg")
 
         if num_of_lost_players < 6:
             pyautogui.click(x=1602, y=409)
@@ -4089,11 +4090,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 5:
             pyautogui.click(x=1602, y=497)
@@ -4101,11 +4102,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 4:
             pyautogui.click(x=1602, y=586)
@@ -4113,11 +4114,11 @@ class ScanThread(QThread):
             time.sleep(timesleep)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 3:
             pyautogui.click(x=1602, y=670)
@@ -4126,11 +4127,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 2:
             pyautogui.click(x=1602, y=758)
@@ -4139,11 +4140,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         if num_of_lost_players < 1:
             pyautogui.click(x=1602, y=844)
@@ -4152,11 +4153,11 @@ class ScanThread(QThread):
             time.sleep(0.6)
             img = pyautogui.screenshot(region=(527, 619, 848, 212))
             count += 1
-            img.save(f"{count}.png")
+            img.save(f"{count}.jpg")
         else:
-            img = cv2.imread("C:/autochess_data/Lost.png")
+            img = cv2.imread("C:/autochess_data/Lost.jpg")
             count += 1
-            cv2.imwrite(f"{count}.png", img)
+            cv2.imwrite(f"{count}.jpg", img)
 
         # Sends progress bar current progress
         self.update_progress.emit("Feeding images through a neural network...")
@@ -4164,7 +4165,7 @@ class ScanThread(QThread):
         os.chdir("G:/darknet/")
 
         # Feeds images to neural net
-        os.system("G:\darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknetsave/yolov4-obj_last_25.weights -ext_output -dont_show -out result.json < data/train.txt")
+        os.system("G:/darknet/darknet.exe detector test G:\darknet/obj.data G:/darknet/thresh_cfg.cfg G:\darknet/backup/yolov4-obj_25000.weights -ext_output -dont_show -out result.json < data/train.txt")
 
         # Parses neural net json result
         data = json.load(open("G:/darknet/result.json"))
@@ -4256,6 +4257,7 @@ class ScanThread(QThread):
                     result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
                     CAS_dict_copy[CAS[0]][1] += result_list[0][0]
 
+
         # Emits dict signal carrying new class and species table information back to caller function
         self.thread_complete_CAS.emit(CAS_dict_copy)
 
@@ -4271,13 +4273,13 @@ class Show_Predictions_Thread(QThread):
                       (125, 0, 255), (255, 0, 125), (125, 255, 0), (0, 255, 125), (0, 125, 255), (255, 125, 0),
                       (125, 75, 0),
                       (0, 75, 125), (0, 125, 75), (75, 125, 0), (75, 0, 125), (125, 0, 75)]
-            data = json.load(open("C:/autochess_data/result.json"))
+            data = json.load(open("G:/darknet/result.json"))
             on_stage_img = cv2.imread("C:/autochess_data/on_stage_heroes.png")
             first_half = np.zeros((0, 1160, 3), dtype=np.uint8)
             second_half = np.zeros((0, 1160, 3), dtype=np.uint8)
             os.chdir("C:/autochess_data")
             for i in range(0, len(data)):
-                img = cv2.imread(f"C:/autochess_data/{i + 1}.png")
+                img = cv2.imread(f"C:/autochess_data/{i + 1}.jpg")
                 for hero in data[i]['objects']:
                     x_start = round(
                         hero["relative_coordinates"]["center_x"] * WIDTH - hero["relative_coordinates"][
