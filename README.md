@@ -1,7 +1,11 @@
+### *[Read this in English](#INTRODUCTION)*
 
+### Mục lục:
+- [GIỚI THIỆU](#giới-thiệu)
+- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#tạo-mô-hình-nhận-diện-hình-ảnh)
+  - [Thu thập dữ liệu](#thu-thập-dữ-liệu)
 
 # GIỚI THIỆU
-### *[Read this in English](#INTRODUCTION)*
 
 Autochess Probabilities and Line-up Tracker là phần mềm hỗ trợ người chơi Dota2-Autochess - một game chiến thuật thời gian thực lấy cảm hứng từ Dota2, Cờ vua, Mạt chược, và Búa Lá Kéo.
 
