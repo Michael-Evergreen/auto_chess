@@ -2,7 +2,7 @@
 
 ### Mục lục:
 - [GIỚI THIỆU](#giới-thiệu)
-- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#tao-mo-hinh-nhan-dien-hinh-anh)
+- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#i.tao-mo-hinh-nhan-dien-hinh-anh)
   - [Thu thập dữ liệu](#thu-thập-dữ-liệu)
 
 # GIỚI THIỆU
