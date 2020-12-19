@@ -2,8 +2,17 @@
 
 ### Mục lục:
 - [GIỚI THIỆU](#giới-thiệu)
-- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#i.tạo-mô-hình-nhận-diện-hình-ảnh)
-  - [Thu thập dữ liệu](#1/thu-thập-dữ-liệu)
+- [TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH](#itạo-mô-hình-nhận-diện-hình-ảnh)
+  - [Thu thập dữ liệu](#1thu-thập-dữ-liệu)
+  - [Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ](#2loại-bỏ-background-và-dán-nhãn-hàng-loạt-nhân-vật-đơn-lẻ)
+  - [Trộn các nhân vật với nhau và tạo nhiễu](#3trộn-các-nhân-vật-với-nhau-và-tạo-nhiễu)
+  - [Dán nhãn thủ công với script hỗ trợ](#4dán-nhãn-thủ-công-với-script-hỗ-trợ)
+  - [Train mô hình](#5train-mô-hình)
+- [TẠO GIAO DIỆN NGƯỜI DÙNG](#tạo-giao-diện-người-dùng)
+  - [Tạo bảng](#1tạo-bảng)
+  - [Tạo cửa sổ Tips and Strategies](#2tạo-cửa-sổ-tips-and-strategies)
+  - [Tạo luồng riêng (worker threads) cho các nút](3tạo-luồng-riêng-worker-threads-cho-các-nút)
+  
 
 # GIỚI THIỆU
 
@@ -410,7 +419,7 @@ Kết quả:
 
 ![](images/alchemist_bb.png)
 
-## 2/Trộn các nhân vật với nhau và tạo nhiễu
+## 3/Trộn các nhân vật với nhau và tạo nhiễu
 
 Nếu chúng ta để nguyên các bức ảnh như thế này thì thuật toán truyền ngược (backpropagation) sẽ không hoạt động hiệu quả. Lý do là vì đối với mỗi mẻ (batch) ta có khoảng 64 bức ảnh được chọn ngẫu nhiên sau đó chia nhỏ tiếp thành các nhóm 8x8, do đó, mô hình sẽ chỉ “nhìn” thấy một lượng ít ỏi các lớp khác nhau (classes). Hàm mất mát (loss function) cũng vì thế mà chỉ phản ánh một phần nhỏ của “bức tranh toàn cảnh”. Backpropagation sẽ chạy đi chạy lại “bù đắp” (thay đổi trọng số) dựa trên một số ít lớp mỗi lần và sẽ mất rất nhiều thời gian để tìm cực tiểu (global minimum) hoặc bị kẹt ở cực tiểu địa phương (local minima). 
 
@@ -624,7 +633,7 @@ Kết quả ta được 160x212 = 33920 bức ảnh được dán nhãn.
 
 3 kỹ thuật có thể được sử dụng để tăng độ hiệu quả của mô hình mà ta có thể thực hiện ở bước này đó là kỹ thuật cutmix và mixup và mosaic được đề cập trong research paper của darknet yolov4 (https://arxiv.org/abs/2004.10934). Liệu chúng có cần thiết hay không thì ta sẽ đợi kết quả sau training.
 
-## 3/Dán nhãn thủ công với script hỗ trợ
+## 4/Dán nhãn thủ công với script hỗ trợ
 
 Có thể dễ dàng nhận thấy hình ảnh ghép với background của chúng ta trông gượng ép. Đó là do các hình ảnh này thiếu hiệu ứng đổ bóng, sai lệch về nguồn sáng và cường độ sáng so với hình nền. Mô hình sẽ chuẩn đoán tốt hơn khi ta cung cấp cho chúng hình sát với thực tế, vậy nên, ta sẽ chụp và dán nhãn thủ công một số hình trong game.
 
@@ -816,7 +825,7 @@ if __name__ == "__main__":
 ```
 
 
-## 4/Train mô hình
+## 5/Train mô hình
 
 Kiến trúc được sử dụng là Darknet YoloV4 của AlexeyAB, ta cần tạo file config tuân theo format của Yolo:
  
@@ -2559,7 +2568,7 @@ Results:
 
 ![](images/alchemist_bb.png)
 
-## 2/Mixes characters together and adds noises
+## 3/Mixes characters together and adds noises
 
 If we were to feed these labeld images to a neural net, the backpropagation algorithm would not work very well. This is because for each batch, the network selects randomly 64 pictures and then further subdivides them into groups of 8x8, so the model will only "sees" a small number of different classes. The loss function would therefore only reflect a small part of the "big picture". Backpropagation would swing back and forth "compensating" (changing weights) forfew classes each time and will take a lot of time to find global minimum or stuck at the local minima.
 
@@ -2773,7 +2782,7 @@ After letting the code run for 40 minutes, we got 160x212 = 33920 labeled images
 
 Three techniques that can be used to increase the effectiveness of the model that can be done at this step are: cutmix, mixup, and mosaic mentioned in the research paper of Darknet Yolov4 (https://arxiv.org/abs/2004.10934). We will wait for the results after training to see whether we need to implement them or not.
 
-## 3/Manually labels images with a helping script.
+## 4/Manually labels images with a helping script.
 
 It's easy to see that our mixed images look forced. This is because incorrect illumination: wrong light sources, intensity, lacking shadows. The model will infer better when we let them learn on images that are close to reality. So, we will manually take some in-game images and label them.
 
@@ -2965,7 +2974,7 @@ if __name__ == "__main__":
 ```
 
 
-## 4/Trains the model
+## 5/Trains the model
 
 The architecture we will use is AlexeyAB's Darknet YoloV4. We need to create a config file in accordance with Yolo's format:
  
