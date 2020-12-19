@@ -92,8 +92,8 @@ Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script tr
 Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
 ===================================
 
-## 1. Loại bỏ background:
-----------------------
+1/Loại bỏ background:
+------------------------------------------------
 
 Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
 
@@ -149,7 +149,7 @@ background_removed_image = cv2.bitwise_and(character_image, character_image, mas
 
 ![](images/Alchemist_pos_1_00.png)
 
-##2. Tìm đường viền:
+2/Tìm đường viền:
 ------------------
 
 Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
@@ -178,7 +178,7 @@ temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
 ```
  
-##3. Dán nhãn:
+3/Dán nhãn:
 ------------
 
 Nhãn trong mô hình YOLO có công thức như sau:
@@ -969,7 +969,7 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-##3/ Tạo luồng riêng (worker threads) cho các nút:
+3/ Tạo luồng riêng (worker threads) cho các nút:
 ------------------------------------------------
 
 Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
