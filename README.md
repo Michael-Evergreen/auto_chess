@@ -2,18 +2,27 @@ Giới thiệu
 ===================================
 Autochess Probabilities and Line-up Tracker là phần mềm hỗ trợ người chơi Dota2-Autochess - một game chiến thuật thời gian thực lấy cảm hứng từ Dota2 và Cờ vua, Mạt chược, và Búa Lá Kéo.
 Phần mềm sử dụng OpenCV, CNN Darket-Yolov4 để nhận diện hình ảnh và PyQt5 để làm giao diện người dùng.
+
 Phần README này được sử dụng để mô tả lại quá trình xây dựng phần mềm này.
 
 Thu thập dữ liệu hình ảnh
 ===================================
 Tất cả mọi nhân vật (quân cờ) trong Autochess đều có mặt trong bức hình dưới đây (83 nhân vật). Tuy nhiên hầu hết các nhân vật trong Autochess đều có 3 cấp độ tương ứng với 3 trang phục khác nhau nên số lượng hình ảnh cần thu thập thực chất lớn gấp 3.
- 
-- Việc cần làm bây giờ là click vào từng nhân vật để xem chúng dưới góc nhìn 3D, chụp ảnh chúng từ nhiều góc camera khác nhau và lưu vào các thư mục riêng biệt.
-- Nhiệm vụ này có tính lặp đi lặp lại khá cao nên có thể thực hiện bằng cách xác định các tọa độ chuột cần click và sử dụng các thư viện mô phỏng thao tác bàn phím và chuột như PyAutoGUI.
-- Các vị trí cần click:
- 
 
-- Code được sử dụng:
+![](images/Dota2-All-Characters.png)
+ 
+Việc cần làm bây giờ là click vào từng nhân vật để xem chúng dưới góc nhìn 3D, chụp ảnh chúng từ nhiều góc camera khác nhau và lưu vào các thư mục riêng biệt.
+
+Nhiệm vụ này có tính lặp đi lặp lại khá cao nên có thể thực hiện bằng cách xác định các tọa độ chuột cần click và sử dụng các thư viện mô phỏng thao tác bàn phím và chuột như PyAutoGUI.
+
+Các vị trí cần click:
+
+![](images/collect_data.png)
+ 
+Code được sử dụng:
+
+```python
+
 import pyautogui
 import time
 import math
@@ -65,86 +74,128 @@ for i in range(len(all_characters)):
         # changes directory to the current character folder and saves screenshot
         os.chdir("G:/all_characters/" + all_characters[i])
         img.save(all_characters[i] + "_pos_" + str(math.floor(j/20) + 1) + "_" str(f"{j%20:02d}") + ".png")
+	
+```
 
-- Kết quả sau khi để script tự chạy trong 30’
+Kết quả sau khi để script tự chạy trong 30’
  
+![](images/after_folder.png)
+
+![](images/folder_alche.png)
+
+![](images/different_pos.png)
+
+Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script trên ta được:
  
+![](images/folder_after_2_3.png)
 
-
-
-   
-- Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script trên ta được:
- 
-
-# Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
+Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
+===================================
 
 1. Loại bỏ background:
-- Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
- 
- 
+----------------------
 
+Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
 
-- khởi tạo mô hình:
+khởi tạo mô hình:
+
+```python
 backgroundSubtractor = cv2.createBackgroundSubtractorKNN(history=1, dist2Threshold=1200)
+```
+*history là tổng số khung hình (frame) trước đó mà được tính là có ảnh hưởng/được mang ra so sánh với khung hình hiện tại, ở đây chúng ta chỉ cần 1 khung hình trước đó.*
 
-- history là tổng số khung hình (frame) trước đó mà được tính là có ảnh hưởng/được mang ra so sánh với khung hình hiện tại, ở đây chúng ta chỉ cần 1 khung hình trước đó.
-- dist2Threshold là bình phương khoảng cách (mức độ khác biệt) khi so sánh các pixels của 2 bức ảnh với nhau. Nếu con số này được thiết lập quá thấp thì kết quả sẽ có rất nhiều nhiễu (noises), còn nếu được thiết lập quá cao thì nhân vật sẽ bị mất các chi tiết.
-- Có 3 thứ chúng ta có thể làm để tối thiểu noises, thứ nhất là bôi đen toàn bộ bức ảnh chỉ trừ một khoảng xung quanh nhân vật. Để làm được vậy ta cần xác định được các vị trí mà nhân vật sẽ đứng cũng như chiều dài và chiều rộng của nhân vật
-- Thứ 2 là sử dụng Gaussian Blur (làm mờ phân phối chuẩn) để “dung hòa” 2 bức ảnh, những sự khác biệt quá nhỏ giữa 2 bức ảnh sẽ trở nên giống nhau hơn
+*dist2Threshold là bình phương khoảng cách (mức độ khác biệt) khi so sánh các pixels của 2 bức ảnh với nhau. Nếu con số này được thiết lập quá thấp thì kết quả sẽ có rất nhiều nhiễu (noises), còn nếu được thiết lập quá cao thì nhân vật sẽ bị mất các chi tiết.*
+
+Có 3 thứ chúng ta có thể làm để tối thiểu noises, thứ nhất là bôi đen toàn bộ bức ảnh chỉ trừ một khoảng xung quanh nhân vật. Để làm được vậy ta cần xác định được các vị trí mà nhân vật sẽ đứng cũng như chiều dài và chiều rộng của nhân vật
+
+Thứ 2 là sử dụng Gaussian Blur (làm mờ phân phối chuẩn) để “dung hòa” 2 bức ảnh, những sự khác biệt quá nhỏ giữa 2 bức ảnh sẽ trở nên giống nhau hơn
+
+```python
 background_image = cv2.GaussianBlur(background_image, (5, 5), 0)
+```
 
-- Thứ 3 là sử dụng các thuật toán giảmnhiễu sau khi đã loại bỏ background:
-•	thuật toán hình thái học: Opening Morphology giúp loại bỏ các nhiễu nhỏ đứng một mình xung quanh nhân vật
-•	thuật toán hình thái học Closing Morphology giúp lấp đầy các chi tiết bị mất của nhân vật
-•	thuật toán giảm nhiễu không sử dụng giá trị trung bình của các điểm ảnh địa phương (Non-Local Means Denoising)
+Thứ 3 là sử dụng các thuật toán giảmnhiễu sau khi đã loại bỏ background:
 
+- thuật toán hình thái học: Opening Morphology giúp loại bỏ các nhiễu nhỏ đứng một mình xung quanh nhân vật
+- thuật toán hình thái học Closing Morphology giúp lấp đầy các chi tiết bị mất của nhân vật
+- thuật toán giảm nhiễu không sử dụng giá trị trung bình của các điểm ảnh địa phương (Non-Local Means Denoising)
+
+```python
 kernel = np.ones((3, 3), np.uint8)
 foregroundmask = cv2.morphologyEx(foregroundmask, cv2.MORPH_OPEN, kernel)
 foregroundmask = cv2.morphologyEx(foregroundmask, cv2.MORPH_CLOSE, kernel)
 foregroundmask = cv2.fastNlMeansDenoising(foregroundmask, None, 30, 7, 21)
+```
 
 - Áp dụng mô hình:
+
+```python
 backgroundSubtractor.apply(background_image, learningRate=0.99)
 backgroundSubtractor.apply(background_image, learningRate=0.99)
 backgroundSubtractor.apply(background_image, learningRate=0.99)
 backgroundSubtractor.apply(background_image, learningRate=0.99)
 foregroundmask = backgroundSubtractor.apply(character_image, learningRate=0)
+```
 
-- learningRate là tốc độ mô hình “học” – khi đối số này bằng 0 thì mô hình sẽ hoàn toàn không cập nhật, khi đối số này bằng 1 thì background đã được học trước đó sẽ bị loại bỏ và mô hình sẽ được khởi tạo lại bắt đầu từ khung hình hiện tại. Ta cần mô hình học nhanh nhất có thể nên learningRate sẽ để ở mức 0.99. Ngoài ra mô hình cũng cần ít nhất 4 khung hình để “học” 
-- Ta áp dụng learningRate = 0 cho bức hình có nhân vật vì ta không muốn mô hình nghĩ bức hình đó là background. Giá trị trả về là mặt nạ của nhân vật.
+*learningRate là tốc độ mô hình “học” – khi đối số này bằng 0 thì mô hình sẽ hoàn toàn không cập nhật, khi đối số này bằng 1 thì background đã được học trước đó sẽ bị loại bỏ và mô hình sẽ được khởi tạo lại bắt đầu từ khung hình hiện tại. Ta cần mô hình học nhanh nhất có thể nên learningRate sẽ để ở mức 0.99. Ngoài ra mô hình cũng cần ít nhất 4 khung hình để “học”*
+
+*Ta áp dụng learningRate = 0 cho bức hình có nhân vật vì ta không muốn mô hình nghĩ bức hình đó là background. Giá trị trả về là mặt nạ của nhân vật.*
+
 - Kết quả sau khi áp dụng bitwise_and giữa mặt nạ và hình ảnh ban đầu:
+
+```python
 background_removed_image = cv2.bitwise_and(character_image, character_image, mask=foregroundmask)
+```
 
- 
-
+![](Alchemist_pos_1_00.png)
 
 2. Tìm đường viền:
-- Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
+------------------
+
+Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
 ta có thể tìm đường viền cho tất cả các vật thể trong hình ảnh. Do đã loại bỏ background, ta có thể dễ dàng xác định nhân vật của chúng ta bằng cách tìm đường viền có diện tích lớn nhất.
+
+```python
 contours, hierarchy = cv2.findContours(foregroundmask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+```
 
--  Bắt buộc phải sử dụng mặt nạ foregroundmask vì findContours chỉ có thể tìm đường viền quanh những vật thể trắng trên nền đen (RGB = 255).
-- tham số cv2.RETR_TREE thiết lập phương thức trả về đường viền, ở đây, OpenCV sẽ truy xuất tất cả các đường viền trả về một hệ thống phân cấp đầy đủ của các đường viền được lồng vào nhau.
-- tham số cv2.CHAIN_APPROX_NONE thiết lập thuật toán xác định đường viền, ở đây, OpenCV sẽ tìm tất cả các điểm trên đường viền.
--  Sử dụng hàm cv2.contourArea ta có thể tìm diện tích của các đường viền:
+*Bắt buộc phải sử dụng mặt nạ foregroundmask vì findContours chỉ có thể tìm đường viền quanh những vật thể trắng trên nền đen (RGB = 255).*
+
+*Tham số cv2.RETR_TREE thiết lập phương thức trả về đường viền, ở đây, OpenCV sẽ truy xuất tất cả các đường viền trả về một hệ thống phân cấp đầy đủ của các đường viền được lồng vào nhau.*
+
+*Tham số cv2.CHAIN_APPROX_NONE thiết lập thuật toán xác định đường viền, ở đây, OpenCV sẽ tìm tất cả các điểm trên đường viền.*
+
+Sử dụng hàm cv2.contourArea ta có thể tìm diện tích của các đường viền:
+
+```python
 areas = [cv2.contourArea(c) for c in contours]
+```
 
-- sắp xếp theo thứ tự lớn đến bé và sử dụng hàm cv2.boundingRect ta được giá trị trả về là tọa độ trên cùng góc trái của đường viền lớn nhất cùng với chiều rộng và chiều dài:
+Sắp xếp theo thứ tự lớn đến bé và sử dụng hàm cv2.boundingRect ta được giá trị trả về là tọa độ trên cùng góc trái của đường viền lớn nhất cùng với chiều rộng và chiều dài:
+
+```python
 temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
+```
  
-
 3. Dán nhãn:
-- Nhãn trong mô hình YOLO có công thức như sau:
+------------
+
+Nhãn trong mô hình YOLO có công thức như sau:
+
+![](images/yolo_format.png)
  
-- Do vậy, công thức chuyển đổi từ các giá trị của OpenCV sang YOLO sẽ như sau:
+Do vậy, công thức chuyển đổi từ các giá trị của OpenCV sang YOLO sẽ như sau:
 x_yolo = (x + w)/2/IMAGE_WIDTH
 y_yolo = (y + h)/2/IMAGE_HEIGHT
 width_yolo = w /IMAGE_WIDTH
 height_yolo = h /IMAGE_HEIGHT
 
-- Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
-- Code được sử dụng:
+Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
+
+Code được sử dụng:
+
+```python
 import cv2
 import os
 import numpy as np
@@ -332,22 +383,32 @@ def main():
 
 if __name__ == "__main__":
         main()
+```
 
-- Kết quả:
+Kết quả:
  
- 
-# Trộn các nhân vật với nhau và tạo nhiễu
-- Nếu chúng ta để nguyên các bức ảnh như thế này thì thuật toán truyền ngược (backpropagation) sẽ không hoạt động hiệu quả. Lý do là vì đối với mỗi mẻ (batch) ta có khoảng 64 bức ảnh được chọn ngẫu nhiên sau đó chia nhỏ tiếp thành các nhóm 8x8, do đó, mô hình sẽ chỉ “nhìn” thấy một lượng ít ỏi các lớp khác nhau (classes). Hàm mất mát (loss function) cũng vì thế mà chỉ phản ánh một phần nhỏ của “bức tranh toàn cảnh”. Backpropagation sẽ chạy đi chạy lại “bù đắp” (thay đổi trọng số) dựa trên một số ít lớp mỗi lần và sẽ mất rất nhiều thời gian để tìm cực tiểu (global minimum) hoặc bị kẹt ở cực tiểu địa phương (local minima). 
- 
-- Để khắc phục điều này, ta cần để mô hình “nhìn” thấy nhiều nhân vật nhất có thể mỗi mẻ, để chúng đều có “tiếng nói”, có ảnh hưởng đến loss function. Ta sẽ ghép 8 bức ảnh lại thành một để các nhân vật đứng cạnh nhau, đồng thời, ta cũng ghép file nhãn của chúng lại.
- 
-- Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung cấp thật nhiều nhiễu. Tạm thời, ta sẽ để các nhân vật đứng trên các background khác nhau trong game.
+![](images/background_removed_and_bb.png)
 
- 
- 
- 
+![](images/alchemist_bb.png)
 
-- Code được sử dụng:
+Trộn các nhân vật với nhau và tạo nhiễu
+=======================================
+
+Nếu chúng ta để nguyên các bức ảnh như thế này thì thuật toán truyền ngược (backpropagation) sẽ không hoạt động hiệu quả. Lý do là vì đối với mỗi mẻ (batch) ta có khoảng 64 bức ảnh được chọn ngẫu nhiên sau đó chia nhỏ tiếp thành các nhóm 8x8, do đó, mô hình sẽ chỉ “nhìn” thấy một lượng ít ỏi các lớp khác nhau (classes). Hàm mất mát (loss function) cũng vì thế mà chỉ phản ánh một phần nhỏ của “bức tranh toàn cảnh”. Backpropagation sẽ chạy đi chạy lại “bù đắp” (thay đổi trọng số) dựa trên một số ít lớp mỗi lần và sẽ mất rất nhiều thời gian để tìm cực tiểu (global minimum) hoặc bị kẹt ở cực tiểu địa phương (local minima). 
+
+![](images/localminima.png)
+ 
+Để khắc phục điều này, ta cần để mô hình “nhìn” thấy nhiều nhân vật nhất có thể mỗi mẻ, để chúng đều có “tiếng nói”, có ảnh hưởng đến loss function. Ta sẽ ghép 8 bức ảnh lại thành một để các nhân vật đứng cạnh nhau, đồng thời, ta cũng ghép file nhãn của chúng lại.
+
+![](images/mixed.png)
+ 
+Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung cấp thật nhiều nhiễu. Tạm thời, ta sẽ để các nhân vật đứng trên các background khác nhau trong game.
+
+![](images/result.png)
+
+Code được sử dụng:
+
+```python
 import cv2
 import numpy as np
 import math
@@ -537,14 +598,28 @@ for character_index in range(len(all_characters)):
             f.write(open(sub_txt_7_path, "r").read().strip() + "\n")
 
         count += 1
+```
 
-- Kết quả ta được 160x212 = 33920 bức ảnh được dán nhãn.  
-- 3 kỹ thuật có thể được sử dụng để tăng độ hiệu quả của mô hình mà ta có thể thực hiện ở bước này đó là kỹ thuật cutmix và mixup và mosaic được đề cập trong research paper của darknet yolov4 (https://arxiv.org/abs/2004.10934). Liệu chúng có cần thiết hay không thì ta sẽ đợi kết quả sau training.
- # Dán nhãn thủ công với script hỗ trợ
-- Có thể dễ dàng nhận thấy hình ảnh ghép với background của chúng ta trông gượng ép. Đó là do các hình ảnh này thiếu hiệu ứng đổ bóng, sai lệch về nguồn sáng và cường độ sáng so với hình nền. Mô hình sẽ chuẩn đoán tốt hơn khi ta cung cấp cho chúng hình sát với thực tế, vậy nên, ta sẽ chụp và dán nhãn thủ công một số hình trong game.
-- Một phần mềm phổ biến để dán nhãn là labelImg. Công việc dán nhãn thủ công đòi hỏi sự tỉ mỉ, kiên trì, và rất nhiều công sức. Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách viết một phần mềm tìm các vật thể lớn nhất trong hình, di chuột đến các vật thể đó và thực hiện thao tác vẽ đường viền. Việc còn lại chỉ là nhập tên của nhân vật.
+Kết quả ta được 160x212 = 33920 bức ảnh được dán nhãn.  
+
+![](images/after_combin_folder.png)
+
+3 kỹ thuật có thể được sử dụng để tăng độ hiệu quả của mô hình mà ta có thể thực hiện ở bước này đó là kỹ thuật cutmix và mixup và mosaic được đề cập trong research paper của darknet yolov4 (https://arxiv.org/abs/2004.10934). Liệu chúng có cần thiết hay không thì ta sẽ đợi kết quả sau training.
+
+Dán nhãn thủ công với script hỗ trợ
+===================================
+
+Có thể dễ dàng nhận thấy hình ảnh ghép với background của chúng ta trông gượng ép. Đó là do các hình ảnh này thiếu hiệu ứng đổ bóng, sai lệch về nguồn sáng và cường độ sáng so với hình nền. Mô hình sẽ chuẩn đoán tốt hơn khi ta cung cấp cho chúng hình sát với thực tế, vậy nên, ta sẽ chụp và dán nhãn thủ công một số hình trong game.
+
+Một phần mềm phổ biến để dán nhãn là labelImg. Công việc dán nhãn thủ công đòi hỏi sự tỉ mỉ, kiên trì, và rất nhiều công sức. 
+
+Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách viết một phần mềm tìm các vật thể lớn nhất trong hình, di chuột đến các vật thể đó và thực hiện thao tác vẽ đường viền. Việc còn lại chỉ là nhập tên của nhân vật.
+
+![](images/manual_labelling_helper.png)
  
-- Code được sử dụng:
+Code được sử dụng:
+
+```python
 import numpy as np
 import cv2
 import pyautogui
@@ -721,128 +796,191 @@ def main():
 
 if __name__ == "__main__":
         main()
+```
 
-# Train mô hình
 
-- Kiến trúc được sử dụng là Darknet YoloV4 của AlexeyAB, ta cần tạo file config tuân theo format của Yolo:
+Train mô hình
+=============
+
+Kiến trúc được sử dụng là Darknet YoloV4 của AlexeyAB, ta cần tạo file config tuân theo format của Yolo:
  
-- Mỗi batch trong YoloV4 là tổng số lượng hình ảnh mà mô hình phải “nhìn thấy” trước khi nó được cập nhật. Ta sẽ thiết lập ở mức mặc định = 64 hình
-- subdivisions là ước số để chia nhỏ batch nhằm tránh tình trạng quá tải bộ nhớ GPU. Con số này càng lớn thì mô hình sẽ train lâu hơn nhưng cũng giảm thiểu yêu cầu về bộ nhớ.   
-- Vì ta chỉ có 33920 bức ảnh nên max_batches sẽ là 212 (tổng số nhân vật) x 2000 = 424000. Mô hình sẽ dừng train sau thời điểm này.
--  Steps sẽ là 424000x0.8 và 424000x0.9 = 339200 và 381600, tại các iterations này, learning rate sẽ được thay đổi theo một tỷ lệ scalar.	
-- network size được để ở mặc định 416x416 do ta sẽ sử dụng google colab để train mô hình và bộ nhớ của GPU miễn phí chỉ có hạn.
+![](images/yolo_config_1.png)
+
+Mỗi batch trong YoloV4 là tổng số lượng hình ảnh mà mô hình phải “nhìn thấy” trước khi nó được cập nhật. Ta sẽ thiết lập ở mức mặc định = 64 hình
+
+subdivisions là ước số để chia nhỏ batch nhằm tránh tình trạng quá tải bộ nhớ GPU. Con số này càng lớn thì mô hình sẽ train lâu hơn nhưng cũng giảm thiểu yêu cầu về bộ nhớ.   
+
+Vì ta chỉ có 33920 bức ảnh nên max_batches sẽ là 212 (tổng số nhân vật) x 2000 = 424000. Mô hình sẽ dừng train sau thời điểm này.
+Steps sẽ là 424000x0.8 và 424000x0.9 = 339200 và 381600, tại các iterations này, learning rate sẽ được thay đổi theo một tỷ lệ scalar.	
+
+network size được để ở mặc định 416x416 do ta sẽ sử dụng google colab để train mô hình và bộ nhớ của GPU miễn phí chỉ có hạn.
+
+![](images/yolo_config_2.png)
+
+Thiết lập số lượng filters ở các convolutional layers, với 212 classes ta sẽ cần 651 filters.
+
+![](images/yolo_config_3.png)
  
-- Thiết lập số lượng filters ở các convolutional layers, với 212 classes ta sẽ cần 651 filters. 
+Tạo file liệt kê tên của tất cả các classes theo thứ tự
+
+Tạo file liệt kê đường dẫn đến folder chứa training data và testing data, đường dẫn đến folder để sau này lưu file trọng số “.weights” khi mô hình đang train.
+
+![](images/yolo_config_4.png)
+
+Ta có thể dùng file trọng số đã được train sẵn, việc làm này được gọi là transfer learning và được khuyến khích vì mô hình sẽ converge (quy tụ) nhanh hơn do đã học được sẵn các hình, khối, nét cơ bản ở những lớp đầu. Tuy nhiên, các file trọng số này được train trên hình ảnh ngoài đời thực trong khi hình ảnh của chúng ta khá là cá biệt và là hình trong game nên ta sẽ không dùng những file trọng số này mà train từ đầu. 
+Average Loss và Mean Average Precision sau khoảng 25000 iterations:
  
-- Tạo file liệt kê tên của tất cả các classes theo thứ tự
-- Tạo file liệt kê đường dẫn đến folder chứa training data và testing data, đường dẫn đến folder để sau này lưu file trọng số “.weights” khi mô hình đang train.
+![](images/training_result.png)
  
-- Ta có thể dùng file trọng số đã được train sẵn, việc làm này được gọi là transfer learning và được khuyến khích vì mô hình sẽ converge (quy tụ) nhanh hơn do đã học được sẵn các hình, khối, nét cơ bản ở những lớp đầu. Tuy nhiên, các file trọng số này được train trên hình ảnh ngoài đời thực trong khi hình ảnh của chúng ta khá là cá biệt và là hình trong game nên ta sẽ không dùng những file trọng số này mà train từ đầu. 
-- Average Loss và Mean Average Precision sau khoảng 25000 iterations:
+![](images/map.png)
  
- 
-- Để mô hình dự đoán hình ảnh mới:
+Để mô hình dự đoán hình ảnh mới:
+
+![](images/test_after_train.png)
  
 
-# Tạo giao diện người dùng
+Tạo giao diện người dùng
+========================
 
- 
-- Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5:
-- Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
+Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
+
+1/ Tạo bảng
+-----------
+
+Trước tiên ta muốn tạo một lớp (class) bảng mà có khả năng search và hiển thị từ được nhập cho người dùng biết họ vừa nhập vào những gì. Ta sẽ tạo một class con của QtableWidget:
+
+```python
 class TableSearch(QTableWidget):
     def __init__(self):
         super().__init__()
+```
 
-- Sau đó ta sẽ tạo một đối tượng QLabel đóng vai trò hiển thị những từ vừa được nhập. Ta để trạng thái mặc định của nó là ẩn:
-self.visual_aid = QLabel(self)
-self.visual_aid.hide()
+Sau đó ta sẽ tạo một đối tượng QLabel đóng vai trò hiển thị những từ vừa được nhập. Ta để trạng thái mặc định của nó là ẩn:
 
-- Và một đối tượng Qtimer để tính toán thời gian giữa 2 lần phím được ấn. Khi nó vượt quá 1 khoảng thời gian nhất định (ở đây ta thiết lập nó bằng với khoảng cách giữa 2 lần tìm kiếm mặc định của QAppliation), Qtimer sẽ gửi timeout signal:
-self.timer = QTimer(
-    singleShot=True,
-    timeout=self.reset_search,
-    interval=QApplication.instance().keyboardInputInterval())
+```python
+	self.visual_aid = QLabel(self)
+	self.visual_aid.hide()
+```
+
+Và một đối tượng Qtimer để tính toán thời gian giữa 2 lần phím được ấn. Khi nó vượt quá 1 khoảng thời gian nhất định (ở đây ta thiết lập nó bằng với khoảng cách giữa 2 lần tìm kiếm mặc định của QAppliation), Qtimer sẽ gửi timeout signal:
+
+```python
+	self.timer = QTimer(
+	    singleShot=True,
+	    timeout=self.reset_search,
+	    interval=QApplication.instance().keyboardInputInterval())
+```
  
-- Ta kết nối timeout signal với hàm(function) giúp xóa hết những từ đã được nhập và ẩn Qlabel đi:
-def reset_search(self):
-    self.visual_aid.setText('')
-    self.visual_aid.hide()
+Ta kết nối timeout signal với hàm(function) giúp xóa hết những từ đã được nhập và ẩn Qlabel đi:
 
-- Sau đó ta định nghĩa lại (override) keyboardSearch của QTableWidget. Hàm này bắt tín hiệu ký tự được gửi từ QTableWidget. Ta muốn cứ mỗi khi có tín hiệu mới ta sẽ nối tín hiệu (ký tự) đó với các ký tự đã có trước đó và bắt đầu đếm thời gian:
-def keyboardSearch(self, string):
-    super().keyboardSearch(string)
-    if not string:
+```python
+    def reset_search(self):
         self.visual_aid.setText('')
-    else:
-        text = self.visual_aid.text()
-        if not text:
-            text = ''
-        text += string
-        self.visual_aid.setText(text)
-    self.update_visual_aid()
-    self.timer.start()
-
-- Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó:
-def update_visual_aid(self):
-    if not self.visual_aid.text():
         self.visual_aid.hide()
-        return
-    self.visual_aid.show()
-    self.visual_aid.adjustSize()
-    geo = self.visual_aid.geometry()
-    geo.moveBottomRight(
-        self.viewport().geometry().bottomRight() - QPoint(200, 200))
-    self.visual_aid.setGeometry(geo)
+```
+
+Sau đó ta định nghĩa lại (override) keyboardSearch của QTableWidget. Hàm này bắt tín hiệu ký tự được gửi từ QTableWidget. Ta muốn cứ mỗi khi có tín hiệu mới ta sẽ nối tín hiệu (ký tự) đó với các ký tự đã có trước đó và bắt đầu đếm thời gian:
+
+```python
+    def keyboardSearch(self, string):
+        super().keyboardSearch(string)
+        if not string:
+            self.visual_aid.setText('')
+        else:
+            text = self.visual_aid.text()
+            if not text:
+                text = ''
+            text += string
+            self.visual_aid.setText(text)
+        self.update_visual_aid()
+        self.timer.start()
+```    
+
+Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó mỗi khi người dùng ấn phím:
+
+```python
+    def update_visual_aid(self):
+        if not self.visual_aid.text():
+            self.visual_aid.hide()
+            return
+        self.visual_aid.show()
+        self.visual_aid.adjustSize()
+        geo = self.visual_aid.geometry()
+        geo.moveBottomRight(
+            self.viewport().geometry().bottomRight() - QPoint(200, 200))
+        self.visual_aid.setGeometry(geo)
+```
 
 2/ Tạo cửa sổ Tips and Strategies:
-- Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
+----------------------------------
+
+Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
+
+```python
 class Strategies(QWidget):
     def __init__(self):
         super().__init__()
+```
 
-- Sau đó ta sẽ tạo một ô trống để nhập từ cần tìm kiếm. Ta cũng sẽ cho nó có khả năng gợi ý kết quả với QCompleter:
-self.search_widget = QLineEdit()
-self.completer = QCompleter(namelist + tuple(CAS_names))
-self.completer.setCaseSensitivity(Qt.CaseInsensitive)
-self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
-self.search_widget.setCompleter(self.completer)
+Sau đó ta sẽ tạo một ô trống để nhập từ cần tìm kiếm. Ta cũng sẽ cho nó có khả năng gợi ý kết quả với QCompleter:
 
-- Và một ô vuông để hiển thị text. Text này sẽ được tải về từ một Github repo và lưu vào thư mục “autochess_data” mỗi lần phần mềm này được bật:
-rGet = requests.get("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt")
-data = (base64.b64decode(rGet.json()['content']).decode("utf-8"))
-with open("C:/autochess_data/Strategies.txt", "w") as f:
-    f.write(data)
+```python
+	self.search_widget = QLineEdit()
+	self.completer = QCompleter(namelist + tuple(CAS_names))
+	self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+	self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
+	self.search_widget.setCompleter(self.completer)
+```
 
-self.TextBody = QTextEdit()
-self.text = open('C:/autochess_data/Strategies.txt').read()
-self.TextBody.setMarkdown(self.text)
+Và một ô vuông để hiển thị text. Text này sẽ được tải về từ một Github repo và lưu vào thư mục “autochess_data” mỗi lần phần mềm này được bật:
 
-- Ta có thể lưu lại những thay đổi ở text này vào Github repo với Github API:
-def save_to_github(self):
-    with open("C:/autochess_data/Strategies.txt", "r") as data:
-        data = data.read().encode("utf-8")
-        data = base64.b64encode(data)
-        content = data.decode("utf-8")
-    inputdata = {}
-    inputdata["path"] = path
-    inputdata["branch"] = "main"
-    inputdata["message"] = "abc"
-    inputdata["content"] = content
-    inputdata["sha"] = sha
-    try:
-        rPut = requests.put(path, auth=(user, token), data=json.dumps(inputdata))
-        if not rPut.ok:
-            print("Error when pushing to %s")
-            print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
-            raise Exception
-    except requests.exceptions.RequestException as e:
-        print(rPut.text)
+```python
+	rGet = requests.get("https://api.github.com/repos/Michael-Evergreen/auto_chess/contents/Strategies.txt")
+	data = (base64.b64decode(rGet.json()['content']).decode("utf-8"))
+	with open("C:/autochess_data/Strategies.txt", "w") as f:
+	    f.write(data)
+
+	self.TextBody = QTextEdit()
+	self.text = open('C:/autochess_data/Strategies.txt').read()
+	self.TextBody.setMarkdown(self.text)
+```
+
+Ta có thể lưu lại những thay đổi ở text này vào Github repo với Github API:
+
+```python
+    def save_to_github(self):
+        with open("C:/autochess_data/Strategies.txt", "r") as data:
+	    data = data.read().encode("utf-8")
+	    data = base64.b64encode(data)
+	    content = data.decode("utf-8")
+        inputdata = {}
+        inputdata["path"] = path
+        inputdata["branch"] = "main"
+        inputdata["message"] = "abc"
+        inputdata["content"] = content
+        inputdata["sha"] = sha
+        try:
+	    rPut = requests.put(path, auth=(user, token), data=json.dumps(inputdata))
+	    if not rPut.ok:
+	        print("Error when pushing to %s")
+	        print("Reason: %s [%d]" % (rPut.text, rPut.status_code))
+	        raise Exception
+        except requests.exceptions.RequestException as e:
+	    print(rPut.text)
+```
 
 3/ Tạo luồng riêng (worker threads) cho các nút:
-- Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
-- Nút Scan của chúng ta là một điển hình như vậy. Nút này làm nhiệm vụ đi qua các bàn cờ của người chơi và chụp ảnh, cho các ảnh này qua neural network để nhận diện nhân vật, chụp ảnh của bảng thống kê và sử dụng OpenCV template matching để nhận diện nhân vật, cấp đô, chủng tộc, nghề, số lượng, phân tích và tổng hợp kết quả.  
-- Ta khắc phục vấn đề này bằng cách tạo thread độc lập khác để xử lý hàm này. Tuy nhiên, thread độc lập này không hề biết đến sự tồn tại của giao diện người dùng của chúng ta nên không thể tương tác trực tiếp với giao diện. Việc nó có thể làm duy nhất là phát các tín hiệu và để để hàm gọi nó kết nối với các slots phù hợp. Các tín hiệu này có thể là bất kỳ đối tượng Python nào.
-- Ta thực hiện việc này bằng cách kế thừa Qthread, khai báo các tín hiệu và loại của chúng, và định nghĩa lại hàm run():
+------------------------------------------------
+
+Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
+
+Nút Scan của chúng ta là một điển hình như vậy. Nút này làm nhiệm vụ đi qua các bàn cờ của người chơi và chụp ảnh, cho các ảnh này qua neural network để nhận diện nhân vật, chụp ảnh của bảng thống kê và sử dụng OpenCV template matching để nhận diện nhân vật, cấp đô, chủng tộc, nghề, số lượng, phân tích và tổng hợp kết quả.  
+
+Ta khắc phục vấn đề này bằng cách tạo thread độc lập khác để xử lý hàm này. Tuy nhiên, thread độc lập này không hề biết đến sự tồn tại của giao diện người dùng của chúng ta nên không thể tương tác trực tiếp với giao diện. Việc nó có thể làm duy nhất là phát các tín hiệu và để để hàm gọi nó kết nối với các slots phù hợp. Các tín hiệu này có thể là bất kỳ đối tượng Python nào.
+
+Ta thực hiện việc này bằng cách kế thừa Qthread, khai báo các tín hiệu và loại của chúng, và định nghĩa lại hàm run():
+
+```python
 class ScanThread(QThread):
     update_progress = pyqtSignal(str)
     thread_complete_RSCP = pyqtSignal(dict)
@@ -850,18 +988,24 @@ class ScanThread(QThread):
     dota_not_found = pyqtSignal(str)
     def run(self):
 	…code…
-  
-- Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín hiệu được phát với slots:
-def Scan(self):
-    self.thread = ScanThread()
-    self.thread.start()
-    self.thread.dota_not_found.connect(self.print_not_found_error)
-    self.thread.update_progress.connect(self.update_progress_bar)
-    self.thread.finished.connect(self.progress_bar_finished)
-    self.thread.thread_complete_RSCP.connect(self.update_RSCP_table)
-    self.thread.thread_complete_CAS.connect(self.update_CAS_table)
+```  
+
+Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín hiệu được phát với slots:
+
+```python
+    def Scan(self):
+        self.thread = ScanThread()
+        self.thread.start()
+        self.thread.dota_not_found.connect(self.print_not_found_error)
+        self.thread.update_progress.connect(self.update_progress_bar)
+        self.thread.finished.connect(self.progress_bar_finished)
+        self.thread.thread_complete_RSCP.connect(self.update_RSCP_table)
+        self.thread.thread_complete_CAS.connect(self.update_CAS_table)
+```
  
-- Code được sử dụng:
+Code được sử dụng để viết toàn bộ giao diện người dùng:
+
+```python
 import json
 import os
 import pyautogui
@@ -1991,4 +2135,4 @@ App = QApplication([])
 window = Myapp()
 window.show()
 sys.exit(App.exec())
-
+```
