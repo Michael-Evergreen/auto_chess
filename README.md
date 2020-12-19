@@ -842,7 +842,7 @@ Average Loss và Mean Average Precision sau khoảng 25000 iterations:
 ![](images/test_after_train.png)
  
 
-# II.Tạo giao diện người dùng
+# II.TẠO GIAO DIỆN NGƯỜI DÙNG
 
 Giao diện người dùng (GUI) được viết sử dụng PyQt5, là một thư viện wrapper của Qt5
 
