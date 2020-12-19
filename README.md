@@ -21,7 +21,7 @@ Các vị trí cần click:
 
 ![](images/collect_data.png)
  
-#### Code được sử dụng để làm điều này:
+### *Code được sử dụng để làm điều này:
 
 ```python
 
@@ -93,7 +93,7 @@ Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script tr
 
 ## 2/Loại bỏ background và dán nhãn hàng loạt nhân vật đơn lẻ
 
-### a/Loại bỏ background:
+### A/Loại bỏ background:
 
 
 Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
@@ -152,7 +152,7 @@ background_removed_image = cv2.bitwise_and(character_image, character_image, mas
 
 ![](images/Alchemist_pos_1_00.png)
 
-### b/Tìm đường viền:
+### B/Tìm đường viền:
 
 
 Với thuật toán FindContour của OpenCV: (https://docs.opencv.org/3.4/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a) 
@@ -181,7 +181,7 @@ temp_areas = sorted(areas, reverse = True)
 x, y, w, h = cv2.boundingRect(contours[areas.index(temp_areas[0])])
 ```
  
-### c/Dán nhãn:
+### C/Dán nhãn:
 
 
 Nhãn trong mô hình YOLO có công thức như sau:
@@ -196,7 +196,7 @@ height_yolo = h /IMAGE_HEIGHT
 
 Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
 
-#### Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -408,7 +408,7 @@ Thêm nữa, để đảm bảo sự linh hoạt của mô hình, ta cần cung 
 
 ![](images/result.png)
 
-#### Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:
 
 ```python
 import cv2
@@ -618,7 +618,7 @@ Tuy nhiên, ta có thể làm công việc này dễ thở hơn bằng cách vi�
 
 ![](images/manual_labelling_helper.png)
  
-#### Code được sử dụng để thực hiện điều này:
+### *Code được sử dụng để thực hiện điều này:
 
 ```python
 import numpy as np
@@ -911,7 +911,7 @@ Cuối cùng là hiển thị QLabel và chỉnh sửa font, vị trí của nó
         self.visual_aid.setGeometry(geo)
 ```
 
-# 2/Tạo cửa sổ Tips and Strategies:
+## 2/Tạo cửa sổ Tips and Strategies:
 
 
 Ta sẽ tạo cửa sổ này bằng cách kế thừa Qwidget, là class cơ sở của tất cả các class con khác trong Qt5:
@@ -969,7 +969,7 @@ Ta có thể lưu lại những thay đổi ở text này vào Github repo với
 	    print(rPut.text)
 ```
 
-# 3/Tạo luồng riêng (worker threads) cho các nút:
+## 3/Tạo luồng riêng (worker threads) cho các nút:
 
 Giao diện người dùng của chúng ta được hiển thị nhờ một main thread và mặc định thì mọi thao tác trên giao diện đều sử dụng main thread này. Vậy nên khi ta ấn một nút thì hàm được gọi bởi nút này sẽ được đưa cho main thread xử lý. Nếu hàm này tiêu tốn quá nhiều thời gian thì giao diện người dùng sẽ bị đơ (freezed) vì main thread chỉ làm một việc một lúc.
 
@@ -1002,7 +1002,7 @@ Và hàmcủa nút Scan sẽ dùng để tạo worker thread này và nối tín
         self.thread.thread_complete_CAS.connect(self.update_CAS_table)
 ```
  
-#### Toàn bộ code được sử dụng để viết giao diện người dùng:
+### *Toàn bộ code được sử dụng để viết giao diện người dùng:
 
 ```python
 import json
