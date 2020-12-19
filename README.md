@@ -2146,6 +2146,7 @@ window = Myapp()
 window.show()
 sys.exit(App.exec())
 ```
+## *[Read this in Vietnamese](#GIỚI THIỆU)*
 
 # INTRODUCTION
 
