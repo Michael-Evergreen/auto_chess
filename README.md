@@ -1,4 +1,4 @@
-[Read this in English](#INTRODUCTION)
+##[Read this in English](#INTRODUCTION)
 
 # GIỚI THIỆU
 
