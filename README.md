@@ -98,6 +98,8 @@ Mặc trang phục cấp 2 và cấp 3 cho nhân vật và lặp lại script tr
 
 Bước đầu tiên cần thực hiện là vẽ mặt nạ (mask) cho nhân vật và loại bỏ hình nền (background). Có nhiều thuật toán khác nhau có thể sử dụng nhưng phù hợp nhất có lẽ là OpenCV BackgroundSubtractor (https://docs.opencv.org/3.4/d7/df6/classcv_1_1BackgroundSubtractor.html) vì chúng ta có sẵn hình nền bao gồm nhân vật và hình nền không bao gồm nhân vật (negative sample).
 
+![](images/with_without.png)
+
 khởi tạo mô hình:
 
 ```python
