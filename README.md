@@ -2165,6 +2165,8 @@ window = Myapp()
 window.show()
 sys.exit(App.exec())
 ```
+
+
 ### *[Read this in Vietnamese](#read-this-in-english)*
 
 ### Table of contents:
@@ -2194,6 +2196,8 @@ In Autochess, each player has a chess board to place their chess pieces. They us
 One thing to do to win a game of Autochess is to observe other players' chess boards to guess the synergies they are planning to build and then build one that can counter them. Another important thing is to track pieces that being played by many players to avoid, and to buy others since the probability of drawing them will be higher. Hence, it will be easier to upgrade them.
 
 The purpose of this software is to take a picture of other players' chess boards, identify the chess pieces they have, and create a table listing the number of pieces, classes, and species being used.
+
+![](images/ourGUI1.png)
 
 This README section is used to document the making of this software.
 
