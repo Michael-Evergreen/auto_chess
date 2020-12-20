@@ -2167,10 +2167,15 @@ App = QApplication([])
 window = Myapp()
 window.show()
 sys.exit(App.exec())
-```
+```        
 
-    
+
+        
 ---------------------------------------------------------------
+        
+           
+           
+	
 
 
 ### *[Read this in Vietnamese](#read-this-in-english)*
