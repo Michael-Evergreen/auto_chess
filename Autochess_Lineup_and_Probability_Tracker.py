@@ -52,7 +52,7 @@ namelist = (
     # 'Clinkz',
     'Clock',
     'CM',
-    # 'DarkWillow',
+    'DarkWillow',
     'Dazzle',
     'Disruptor',
     'Doom',
@@ -79,7 +79,7 @@ namelist = (
     'Kunkka',
     'LC',
     'LoneDruid',
-    'Leshrac',
+    # 'Leshrac',
     'Lich',
     'Lina',
     'Lion',
@@ -93,13 +93,13 @@ namelist = (
     'MonkeyKing',
     'Morphling',
     # 'Naga',
-    'Naix',
+    # 'Naix',
     'Necrophos',
     'Nevermore',
     'NP',
     # 'NS',
     'Nyx',
-    'OD',
+    # 'OD',
     'OgreMagi',
     'OmniKnight',
     'Oracle',
@@ -198,6 +198,7 @@ RSCP_Dict = {
     'Mars': ['1G', 'God', 'Warrior', 'Mars', 45],
     'IceDuck': ['1G', 'Dragon', 'Mage', 'IceDuck', 45],
     'CM': ['1G', 'Human', 'Mage', 'CM', 45],
+    'DarkWillow': ['1G', 'Elf', 'Wizard', 'DarkWillow', 45],
     'Luna': ['1G', 'Elf', 'Knight', 'Luna', 45],
     'WitchDoctor': ['1G', 'Troll', 'Warlock', 'WitchDoctor', 45],
     'Lion': ['2G', 'Demon', 'Wizard', 'Lion', 30],
@@ -217,7 +218,7 @@ RSCP_Dict = {
     'Oracle': ['2G', 'God', 'Priest', 'Oracle', 30],
     'Panda': ['2G', 'Pandaren', 'Monk', 'Panda', 30],
     'EmberSpirit': ['3G', 'Pandaren', 'Assassin', 'EmberSpirit', 30],
-    'StormSpirit': ['3G', 'Pandaren', 'Mage', 'StormSpirit', 30],
+    'Storm': ['3G', 'Pandaren', 'Mage', 'Storm', 30],
     'EarthSpirit': ['3G', 'Pandaren', 'Shaman', 'EarthSpirit', 30],
     'Venom': ['3G', 'Aqir/Beast', 'Warlock', 'Venom', 25],
     'OmniKnight': ['3G', 'Human', 'Knight', 'OmniKnight', 25],
@@ -800,7 +801,9 @@ class Myapp(QWidget):
     def update_RSCP_table(self, Dict):
         row = 0
         for hero in Dict:
-            self.tableWidget.setItem(row, 4, QTableWidgetItem(str(Dict[hero][4])))
+            item4 = QTableWidgetItem()
+            item4.setData(Qt.EditRole, QVariant(Dict[hero][4]))
+            self.tableWidget.setItem(row, 4, item4)
             self.tableWidget.item(row, 4).setForeground(self.colors[int(Dict[hero][0][0]) - 1])
             row += 1
 
@@ -808,14 +811,18 @@ class Myapp(QWidget):
     def update_CAS_table(self, CAS_dict_copy):
         row = 0
         for CAS in CAS_dict_copy:
-            window.CAS_tableWidget.setItem(row, 0, QTableWidgetItem(CAS))
-            window.CAS_tableWidget.setItem(row, 1, QTableWidgetItem(str(CAS_dict_copy[CAS][0])))
-            window.CAS_tableWidget.setItem(row, 2, QTableWidgetItem(str(CAS_dict_copy[CAS][1])))
-            window.CAS_tableWidget.item(row, 0).setForeground(Qt.white)
-            window.CAS_tableWidget.item(row, 1).setTextAlignment(Qt.AlignHCenter)
-            window.CAS_tableWidget.item(row, 1).setForeground(Qt.white)
-            window.CAS_tableWidget.item(row, 2).setTextAlignment(Qt.AlignHCenter)
-            window.CAS_tableWidget.item(row, 2).setForeground(Qt.white)
+            self.CAS_tableWidget.setItem(row, 0, QTableWidgetItem(CAS))
+            item1 = QTableWidgetItem()
+            item1.setData(Qt.EditRole, QVariant(CAS_dict_copy[CAS][0]))
+            self.CAS_tableWidget.setItem(row, 1, item1)
+            item2 = QTableWidgetItem()
+            item2.setData(Qt.EditRole, QVariant(CAS_dict_copy[CAS][1]))
+            self.CAS_tableWidget.setItem(row, 2, item2)
+            self.CAS_tableWidget.item(row, 0).setForeground(Qt.white)
+            self.CAS_tableWidget.item(row, 1).setTextAlignment(Qt.AlignHCenter)
+            self.CAS_tableWidget.item(row, 1).setForeground(Qt.white)
+            self.CAS_tableWidget.item(row, 2).setTextAlignment(Qt.AlignHCenter)
+            self.CAS_tableWidget.item(row, 2).setForeground(Qt.white)
             row += 1
 
 
@@ -1056,10 +1063,15 @@ class ScanThread(QThread):
                     number_icon = on_stage_CAS_icons_grayed[loc[0][i] + 25:loc[0][i] + 37, loc[1][i] + 2:loc[1][i] + 19]
                     result_list = []
                     for icon in CAS_numbers_and_icons:
-                        if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.85:
+                        if cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED) > 0.7:
                             result_list.append((icon[0], cv2.matchTemplate(number_icon, icon[1], cv2.TM_CCOEFF_NORMED)))
                     result_list = sorted(result_list, key=lambda icon: icon[1], reverse=True)
-                    CAS_dict_copy[CAS[0]][1] += result_list[0][0]
+                    try:
+                        CAS_dict_copy[CAS[0]][1] += result_list[0][0]
+                    except IndexError as e:
+                        print(CAS)
+                        print(CAS_dict_copy[CAS[0]][1])
+                        print(result_list[0][0])
 
 
         # Emits dict signal carrying new class and species table information back to caller function
