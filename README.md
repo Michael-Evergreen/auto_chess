@@ -34,7 +34,9 @@ Phần README này được sử dụng để mô tả lại quá trình xây d�
 
 ## 1/Thu thập dữ liệu
 
-Tất cả mọi nhân vật (quân cờ) trong Autochess đều có mặt trong bức hình dưới đây (83 nhân vật). Tuy nhiên hầu hết các nhân vật trong Autochess đều có 3 cấp độ tương ứng với 3 trang phục khác nhau nên số lượng hình ảnh cần thu thập thực chất lớn gấp 3.
+Một cách để thu thập dữ liệu về các nhân vật (quân cờ) là chơi thật nhiều games Autochess và chụp ảnh các nhân vật. Tuy nhiên cách này tốn rất nhiều thời gian và công sức.
+
+May mắn thay, vì Autochess là game nhỏ của Dota2 nên mọi nhân vật của Autochess đều có trong Dota2. Để xem mô hình 3D của chúng ta chỉ việc ấn vào hình ảnh đại diện của chúng trong bức hình dưới đây. Trong bức hình ta có 83 nhân vật tất cả, tuy nhiên, hầu hết các nhân vật trong Autochess đều có 3 cấp độ tương ứng với 3 trang phục khác nhau nên số lượng hình ảnh cần thu thập thực chất lớn gấp 3.
 
 ![](images/Dota2-All-Characters.png)
  
@@ -2198,7 +2200,9 @@ This README section is used to document the making of this software.
 
 ## 1/Collects Data
 
-All characters (chess pieces) in Autochess are shown in the picture below (83 characters). However, most characters in Autochess have 3 levels corresponding to 3 different outfits, so the number of images to collect is effectively 3 times greater.
+One way to collect data of characters (chess pieces) is playing lots of Autochess games and manually taking pictures of them. However, this method takes a lot of time and effort.
+
+Fortunately, since Autochess is a "child" game of Dota2, every Autochess character is in Dota2. To view their 3D models, we just have to click on their avatar in the image below. In the image, we have 83 characters in total, however, most characters in Autochess have 3 levels corresponding to 3 different outfits, so the number of images to collect is effectively triple.
 
 ![](images/Dota2-All-Characters.png)
  
