@@ -28,6 +28,8 @@ Một việc cần làm tốt để chiến thắng Autochess là theo dõi bàn
 
 Mục đích của phần mềm này là chụp ảnh lại bàn cờ của những người chơi khác, nhận diện các quân cờ họ có và lập một bảng liệt kê số lượng quân cờ, nghề, bộ tộc đang được những người chơi khác sử dụng.
 
+![](images/ourGUI1.png)
+
 Phần README này được sử dụng để mô tả lại quá trình xây dựng phần mềm này.
 
 # I.TẠO MÔ HÌNH NHẬN DIỆN HÌNH ẢNH
