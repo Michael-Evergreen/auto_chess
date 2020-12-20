@@ -80,7 +80,7 @@ for character in all_characters:
 # iterates through all characters
 for i in range(len(all_characters)):
 
-    # identify which row we are currently at (each row has 17 characters)
+    # identifies which row we are currently at (each row has 17 characters)
     row = math.floor(i/17)
 
     # calculates character's coordinate
@@ -218,10 +218,13 @@ Nhãn trong mô hình YOLO có công thức như sau:
 ![](images/yolo_format.png)
  
 Do vậy, công thức chuyển đổi từ các giá trị của OpenCV sang YOLO sẽ như sau:
+
+```python
 x_yolo = (x + w)/2/IMAGE_WIDTH
 y_yolo = (y + h)/2/IMAGE_HEIGHT
 width_yolo = w /IMAGE_WIDTH
 height_yolo = h /IMAGE_HEIGHT
+```
 
 Tên của nhãn sẽ chính là tên của folder chứa nhân vật.
 
@@ -2250,7 +2253,7 @@ for character in all_characters:
 # iterates through all characters
 for i in range(len(all_characters)):
 
-    # identify which row we are currently at (each row has 17 characters)
+    # identifies which row we are currently at (each row has 17 characters)
     row = math.floor(i/17)
 
     # calculates character's coordinate
@@ -2387,10 +2390,12 @@ YOLO label format:
  
 Hence, we need to reformat OpenCV's values into YOLO's values:
 
+```python
 x_yolo = (x + w)/2/IMAGE_WIDTH
 y_yolo = (y + h)/2/IMAGE_HEIGHT
 width_yolo = w /IMAGE_WIDTH
 height_yolo = h /IMAGE_HEIGHT
+```
 
 We obtain classes' labels from their parent folders.
 
